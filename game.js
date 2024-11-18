@@ -1,5 +1,5 @@
-import Menu from "menu.js";
-import Level1 from "level1.js";
+import { makeMenu } from "menu.js";
+import { makeLevel1 } from "level1.js";
 
 const scenes = ["menu", "level1", "level2", "level3"];
 let currentScene = "menu";
@@ -8,13 +8,13 @@ function setScene(name) {
     currentScene = name;
   }
 }
-const menu = new Menu();
-const level1 = new Level1();
+const menu = makeMenu();
+const level1 = makeLevel1();
 // const level2 = makeLevel2;
 // const level3 = makeLevel3;
-
 function preload() {
   menu.load();
+  level1.load();
 }
 
 function setup() {
@@ -22,13 +22,14 @@ function setup() {
   pixelDensity(3);
   frameRate(60);
   noSmooth();
+
+  level1.setup();
 }
 
 function draw() {
-  scale(4);
+  //scale(4);
   switch (currentScene) {
     case "menu":
-      menu.update();
       menu.draw();
       break;
     case "level1":
