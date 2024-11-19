@@ -10,7 +10,8 @@ export default class Camera {
     }
 
     update() {
-        this.x = -this.entity.x + (width / 3);
-        this.y = -this.entity.y + (height / 3);
+        this.x = -this.entity.x + 192/2;
+        this.y = -this.entity.y + 108/2;
     }
+
 }

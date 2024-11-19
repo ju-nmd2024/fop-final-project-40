@@ -1,5 +1,5 @@
-import { makeMenu } from "menu.js";
-import { makeLevel1 } from "level1.js";
+import { makeMenu } from "./menu.js";
+import { makeLevel1 } from "./level1.js";
 
 const scenes = ["menu", "level1", "level2", "level3"];
 let currentScene = "menu";
@@ -16,17 +16,20 @@ function preload() {
   menu.load();
   level1.load();
 }
+window.preload = preload;
 
 function setup() {
-  createCanvas(800, 500);
+  createCanvas(192, 108);
   pixelDensity(3);
   frameRate(60);
   noSmooth();
 
   level1.setup();
 }
+window.setup = setup;
 
 function draw() {
+  background(255, 0, 0);
   //scale(4);
   switch (currentScene) {
     case "menu":
@@ -45,9 +48,11 @@ function draw() {
     default:
   }
 }
+window.draw = draw;
 
 function keyReleased() {
   if (keyCode === 13 && currentScene === "menu") {
     setScene("level1");
   }
 }
+window.keyReleased = keyReleased;
