@@ -12,7 +12,8 @@ export default class Player {
         this.viewportY = 0; 
         this.spriteX = 0;
         this.spriteY = 0;
-        this.spriteR = Math.atan2((108/2), (192/2));
+        this.spriteR = 0;
+        this.spriteRSmooth = 0;
     }
     load() {
         this.spriteRef = loadImage('./assets/player.png');
@@ -54,9 +55,13 @@ export default class Player {
         imageMode(CENTER);
         push();
         translate(192/2, 108/2);
+        
+        push();
 
-        //angleMode(DEGREES);
-        rotate(this.spriteR);
+        // rotation code inspired by https://discourse.processing.org/t/rotation-based-on-mouse/1766
+
+        this.spriteRSmooth = lerp(this.spriteRSmooth, this.spriteR, 0.2);
+        rotate(this.spriteRSmooth)
         drawSprite(
             this.spriteRef,
             this.viewportX + this.spriteX,
@@ -64,6 +69,12 @@ export default class Player {
             this.width,
             this.height
         );
+        pop();
+
+        push();
+        // this takes half of width & height and multiplies it by the upscale of our window (then lastly fixes the rotation offset)
+        this.spriteR = (Math.atan2(window.mouseY-(108/2)*4, window.mouseX-(192/2)*4)+ radians(90));
+        rotate(this.spriteR);
         drawSprite(
             this.itemRef,
             this.viewportX + this.spriteX,
@@ -72,6 +83,9 @@ export default class Player {
             this.height
         );
         pop();
+
+        pop();
+
         push();
         //this.viewportX = (this.x + camera.x);
         //this.viewportY = (this.y + camera.y);
