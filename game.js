@@ -2,7 +2,7 @@ import { makeMenu } from "./menu.js";
 import { makeLevel1 } from "./level1.js";
 
 const scenes = ["menu", "level1", "level2", "level3"];
-let currentScene = "menu";
+let currentScene = "level1";
 function setScene(name) {
   if (scenes.includes(name)) {
     currentScene = name;
@@ -29,7 +29,6 @@ function setup() {
 window.setup = setup;
 
 function draw() {
-  background(255, 0, 0);
   //scale(4);
   switch (currentScene) {
     case "menu":

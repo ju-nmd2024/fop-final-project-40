@@ -13,5 +13,4 @@ export default class Camera {
         this.x = -this.entity.x + 192/2;
         this.y = -this.entity.y + 108/2;
     }
-
 }

@@ -1,20 +1,23 @@
 export default class Player {
     constructor(x, y) {
         this.spriteRef = null;
+        this.itemRef = null;
         this.width = 16;
         this.height = 16;
 
         this.speed = 200;
-        this.x = x;
-        this.y = y;
-        this.viewportX = x;
-        this.viewportY = y;
+        this.x = 0;
+        this.y = 0;
+        this.viewportX = -this.height/2;
+        this.viewportY = 0; 
         this.spriteX = 0;
         this.spriteY = 0;
+        this.spriteR = Math.atan2((108/2), (192/2));
     }
 
     load() {
         this.spriteRef = loadImage('./assets/player.png');
+        this.itemRef = loadImage('./assets/gun.png');
     }
 
     loadAnim() {
@@ -49,16 +52,31 @@ export default class Player {
     }
 
     draw(camera) {
-        this.viewportX = this.x + camera.x;
-        this.viewportY = this.y + camera.y;
 
+        push();
+        translate(192/2, 108/2);
+
+        //angleMode(DEGREES);
+        rotate(this.spriteR);
         drawSprite(
             this.spriteRef,
             this.viewportX + this.spriteX,
-            this.viewportY + this.spriteY,
+            this.viewportY + this.spriteY - this.height/2,
             this.width,
             this.height
         );
+        drawSprite(
+            this.itemRef,
+            this.viewportX + this.spriteX,
+            this.viewportY + this.spriteY - this.height/2,
+            this.width,
+            this.height
+        );
+        pop();
+        push();
+        //this.viewportX = (this.x + camera.x);
+        //this.viewportY = (this.y + camera.y);
+        pop();
     }
 }
 
@@ -77,3 +95,4 @@ function drawSprite(
     height
    );
 }
+window.drawSprite = drawSprite;
