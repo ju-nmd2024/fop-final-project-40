@@ -5,16 +5,15 @@ export default class Player {
         this.width = 16;
         this.height = 16;
 
-        this.speed = 200;
+        this.speed = 100;
         this.x = 0;
         this.y = 0;
-        this.viewportX = -this.height/2;
+        this.viewportX = 0;
         this.viewportY = 0; 
         this.spriteX = 0;
         this.spriteY = 0;
         this.spriteR = Math.atan2((108/2), (192/2));
     }
-
     load() {
         this.spriteRef = loadImage('./assets/player.png');
         this.itemRef = loadImage('./assets/gun.png');
@@ -52,7 +51,7 @@ export default class Player {
     }
 
     draw(camera) {
-
+        imageMode(CENTER);
         push();
         translate(192/2, 108/2);
 
@@ -61,14 +60,14 @@ export default class Player {
         drawSprite(
             this.spriteRef,
             this.viewportX + this.spriteX,
-            this.viewportY + this.spriteY - this.height/2,
+            this.viewportY + this.spriteY,
             this.width,
             this.height
         );
         drawSprite(
             this.itemRef,
             this.viewportX + this.spriteX,
-            this.viewportY + this.spriteY - this.height/2,
+            this.viewportY + this.spriteY,
             this.width,
             this.height
         );
