@@ -26,7 +26,7 @@ export default class Gun extends Entity {
         this.anims = {
             "idle": 0,
             "run": {from: 1, to: 2, loop: true, speed: 7},
-            "shoot": { from: 3, to: 4, loop: false, speed: 16},
+            "shoot": { from: 3, to: 5, loop: false, speed: 10},
         };
     }
     
