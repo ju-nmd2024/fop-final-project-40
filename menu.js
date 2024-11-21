@@ -3,7 +3,7 @@ export function makeMenu() {
         menuBackgroundImg: null,
         menuLogoImg: null,
         menuStartImg: null,
-        alpha: 100,
+        alpha: 200,
         load() {
             this.menuBackgroundImg = loadImage("./assets/background.png");
             this.menuLogoImg = loadImage("./assets/logo.png");
@@ -16,9 +16,9 @@ export function makeMenu() {
         draw() {
             clear();
             image(this.menuBackgroundImg, 0, 0);
-            image(this.menuLogoImg, 20, 20);
+            image(this.menuLogoImg, 0, 0);
             tint(255, this.alpha);
-            image(this.menuStartImg, 50, 60);
+            image(this.menuStartImg, 0, 0);
             noTint();
         }
     };
