@@ -37,7 +37,11 @@ export default class Entity {
         if (this.currentFrame > animData.to && animData.loop) {
             this.currentFrame = animData.from;
         }
-        
+        // if it shoudn't loop, stay on last frame
+        if (this.currentFrame >= animData.to && !animData.loop) {
+            this.currentFrame = animData.to;
+        }
+
         const currentFrameData = this.frames[this.currentFrame];
 
         // make animation go through frames at constant speed

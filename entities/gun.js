@@ -1,7 +1,7 @@
 import Entity from "./entity.js";
 import { getFramesPos, drawSprite } from "../utils.js";
 
-export default class Player extends Entity {
+export default class Gun extends Entity {
     constructor(x, y) {
         super();
 
@@ -16,23 +16,30 @@ export default class Player extends Entity {
         this.spriteRSmooth = 0;
     }
     load() {
-        this.spriteRef = loadImage('./assets/player.png');
+        this.spriteRef = loadImage('./assets/gun.png');
     }
 
     loadAnim() {
-        this.frames = getFramesPos(3, 1, this.width+1, this.height+1);
-
+        this.frames = getFramesPos(3, 2, this.width+1, this.height+1);
+        console.log(this.frames);
         // animations
         this.anims = {
             "idle": 0,
             "run": {from: 1, to: 2, loop: true, speed: 7},
+            "shoot": { from: 3, to: 4, loop: false, speed: 16},
         };
     }
-  
+    
+
+
+
     movePlayer(moveBy) {
         let move = {
             x: 0,
             y: 0,
+        }
+        if (mouseIsPressed) {
+            this.setAnim("shoot");
         }
         if (keyIsDown(68)) {
             move.x += moveBy;
@@ -47,9 +54,13 @@ export default class Player extends Entity {
             move.y += moveBy;
         }
         if (move.x === 0 && move.y === 0) {
-            this.setAnim("idle");
+            if (!mouseIsPressed) {
+                this.setAnim("idle");
+            }
         } else {
-            this.setAnim("run");
+            if (!mouseIsPressed) {
+                this.setAnim("run");
+            }
             this.x += move.x;
             this.y += move.y;
         }
@@ -75,29 +86,21 @@ export default class Player extends Entity {
         imageMode(CENTER);
         push();
         translate(192/2, 108/2);
-        
-        push();
-
+    
         // rotation code inspired by https://discourse.processing.org/t/rotation-based-on-mouse/1766
-
-        this.spriteRSmooth = lerpAngle(this.spriteRSmooth, this.spriteR, 0.2);
-        rotate(this.spriteRSmooth);
+        push();
+        // this takes half of width & height and multiplies it by the upscale of our window (then lastly fixes the rotation offset)
+        this.spriteR = (Math.atan2(window.mouseY-(108/2)*6, window.mouseX-(192/2)*6)+ radians(90));
+        rotate(this.spriteR);
         drawSprite(
             this.spriteRef,
             this.viewportX + this.spriteX,
-            this.viewportY + this.spriteY,
+            this.viewportY + this.spriteY - 3,
             this.currentFrameData.x,
             this.currentFrameData.y,
             this.width,
             this.height
         );
-        pop();
-
-        push();
-        // this takes half of width & height and multiplies it by the upscale of our window (then lastly fixes the rotation offset)
-        this.spriteR = (Math.atan2(window.mouseY-(108/2)*6, window.mouseX-(192/2)*6)+ radians(90));
-        rotate(this.spriteR);
-
         pop();
 
         pop();
@@ -107,19 +110,4 @@ export default class Player extends Entity {
         //this.viewportY = (this.y + camera.y);
         pop();
     }
-}
-
-
-
-function lerpAngle(a, b, step) {
-	// Prefer shortest distance,
-	const delta = b - a;
-	if (delta == 0.0) {
-		return a;
-	} else if (delta < -PI) {
-		b += TWO_PI;
-	} else if (delta > PI) {
-		a += TWO_PI;
-	}
-	return (1.0 - step) * a + step * b;
 }
