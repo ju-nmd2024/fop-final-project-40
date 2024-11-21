@@ -1,15 +1,15 @@
-export default class Player {
-    constructor(x, y) {
-        this.spriteRef = null;
-        this.itemRef = null;
-        this.width = 16;
-        this.height = 16;
+import Entity from "./entity.js";
+import { getFramesPos, drawSprite } from "../utils.js";
 
-        this.speed = 100;
-        this.x = 0;
-        this.y = 0;
-        this.viewportX = 0;
-        this.viewportY = 0; 
+export default class Player extends Entity {
+    constructor(x, y) {
+        super();
+
+        this.speed = 100; // player speed
+        this.x = x;
+        this.y = y;
+        this.viewportX = x;
+        this.viewportY = y;
         this.spriteX = 0;
         this.spriteY = 0;
         this.spriteR = 0;
@@ -21,34 +21,55 @@ export default class Player {
     }
 
     loadAnim() {
-        // room for adding animation
-    }
+        this.frames = getFramesPos(3, 1, this.width+1, this.height+1);
 
+        // animations
+        this.anims = {
+            "idle": 0,
+            "run": {from: 1, to: 2, loop: true, speed: 7},
+        };
+    }
+  
     movePlayer(moveBy) {
+        let move = {
+            x: 0,
+            y: 0,
+        }
         if (keyIsDown(68)) {
-            this.x += moveBy;
+            move.x += moveBy;
         }
         if (keyIsDown(65)) {
-            this.x -= moveBy;
+            move.x -= moveBy;
         }
         if (keyIsDown(87)) {
-            this.y -= moveBy;
+            move.y -= moveBy;
         }
         if (keyIsDown(83)) {
-            this.y += moveBy;
+            move.y += moveBy;
+        }
+        if (move.x === 0 && move.y === 0) {
+            this.setAnim("idle");
+        } else {
+            this.setAnim("run");
+            this.x += move.x;
+            this.y += move.y;
         }
     }
 
     setup() {
         this.loadAnim();
-        // not needed atm
+        this.setAnim("idle");
     }
 
     update() {
-        // could be used for animations
+        //prev timer
+        this.animationTimer += deltaTime; // make timer
 
         const moveBy = (this.speed / 1000) * deltaTime;
         this.movePlayer(moveBy);
+
+        const animData = this.anims[this.currentAnim];
+        this.currentFrameData = this.setAnimFrame(animData);
     }
 
     draw(camera) {
@@ -60,12 +81,14 @@ export default class Player {
 
         // rotation code inspired by https://discourse.processing.org/t/rotation-based-on-mouse/1766
 
-        this.spriteRSmooth = lerp(this.spriteRSmooth, this.spriteR, 0.2);
-        rotate(this.spriteRSmooth)
+        this.spriteRSmooth = lerpAngle(this.spriteRSmooth, this.spriteR, 0.2);
+        rotate(this.spriteRSmooth);
         drawSprite(
             this.spriteRef,
             this.viewportX + this.spriteX,
             this.viewportY + this.spriteY,
+            this.currentFrameData.x,
+            this.currentFrameData.y,
             this.width,
             this.height
         );
@@ -73,12 +96,14 @@ export default class Player {
 
         push();
         // this takes half of width & height and multiplies it by the upscale of our window (then lastly fixes the rotation offset)
-        this.spriteR = (Math.atan2(window.mouseY-(108/2)*4, window.mouseX-(192/2)*4)+ radians(90));
+        this.spriteR = (Math.atan2(window.mouseY-(108/2)*6, window.mouseX-(192/2)*6)+ radians(90));
         rotate(this.spriteR);
         drawSprite(
             this.itemRef,
             this.viewportX + this.spriteX,
-            this.viewportY + this.spriteY,
+            this.viewportY + this.spriteY -3,
+            this.currentFrameData.x,
+            this.currentFrameData.y,
             this.width,
             this.height
         );
@@ -93,19 +118,17 @@ export default class Player {
     }
 }
 
-function drawSprite(
-    src,
-    destinationX,
-    destinationY,
-    width,
-    height
-) {
-   image(
-    src,
-    destinationX,
-    destinationY,
-    width,
-    height
-   );
+
+
+function lerpAngle(a, b, step) {
+	// Prefer shortest distance,
+	const delta = b - a;
+	if (delta == 0.0) {
+		return a;
+	} else if (delta < -PI) {
+		b += TWO_PI;
+	} else if (delta > PI) {
+		a += TWO_PI;
+	}
+	return (1.0 - step) * a + step * b;
 }
-window.drawSprite = drawSprite;

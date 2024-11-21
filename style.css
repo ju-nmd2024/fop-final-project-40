@@ -13,5 +13,6 @@ main {
 }
 
 canvas {
-  scale: 4;
+  scale: 6;
+  image-rendering: crisp-edges;
 }

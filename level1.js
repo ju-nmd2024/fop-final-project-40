@@ -21,8 +21,6 @@ export function makeLevel1(setScene) {
             this.camera.update();
         },
         draw() {
-            console.log(this.camera.x);
-            console.log('h '+this.player.x);
             clear();
             background(0);
             rect(0 + this.camera.x, 0 + this.camera.y, 50, 50);
