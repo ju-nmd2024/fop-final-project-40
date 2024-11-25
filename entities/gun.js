@@ -1,4 +1,5 @@
 import Entity from "./entity.js";
+import Bullet from "./bullet.js";
 import { getFramesPos, drawSprite } from "../utils.js";
 
 export default class Gun extends Entity {
@@ -14,6 +15,8 @@ export default class Gun extends Entity {
     this.spriteY = 0;
     this.spriteR = 0;
     this.spriteRSmooth = 0;
+
+    this.prevPress = false; // nånting skott sjuktit tryuckt kanpp
   }
   load() {
     this.spriteRef = loadImage("./assets/gun.png");
@@ -35,10 +38,6 @@ export default class Gun extends Entity {
       x: 0,
       y: 0,
     };
-    if (mouseIsPressed) {
-      //this.shoot(); // calls the shooting method for the bullets
-      this.setAnim("shoot");
-    }
     if (keyIsDown(68)) {
       move.x += moveBy; // D
     }
@@ -69,9 +68,16 @@ export default class Gun extends Entity {
     this.setAnim("idle");
   }
 
-  update() {
+  update(bullets) {
     //prev timer
     this.animationTimer += deltaTime; // make timer
+
+    if (mouseIsPressed && !this.prevPress) {
+      //this.shoot(); // calls the shooting method for the bullets
+      this.setAnim("shoot");
+      bullets.push(new Bullet(this.x, this.y, (this.spriteR)-radians(90)));
+    }
+    this.prevPress = mouseIsPressed;
 
     const moveBy = (this.speed / 1000) * deltaTime;
     this.movePlayer(moveBy);
