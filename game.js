@@ -1,4 +1,4 @@
-import { makeMenu } from "./menu.js";
+import Menu from "./menu.js";
 import { makeLevel1 } from "./level1.js";
 
 const scenes = ["menu", "level1", "level2", "level3"];
@@ -8,7 +8,7 @@ function setScene(name) {
     currentScene = name;
   }
 }
-const menu = makeMenu();
+const menu = new Menu();
 const level1 = makeLevel1();
 // const level2 = makeLevel2;
 // const level3 = makeLevel3;
@@ -29,9 +29,12 @@ function setup() {
 window.setup = setup;
 
 function draw() {
-  //scale(4);
   switch (currentScene) {
     case "menu":
+      menu.update();
+      if (menu.start) {
+        setScene("level1");
+      }
       menu.draw();
       break;
     case "level1":
@@ -49,9 +52,4 @@ function draw() {
 }
 window.draw = draw;
 
-function keyReleased() {
-  if (keyCode === 13 && currentScene === "menu") {
-    setScene("level1");
-  }
-}
-window.keyReleased = keyReleased;
+//window.keyReleased = keyReleased;
