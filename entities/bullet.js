@@ -3,7 +3,7 @@ export default class Bullet {
         this.x = x;
         this.y = y;
         this.angle = angle;
-        this.speed = Math.random()*2+3;
+        this.speed = Math.random()*2+3; // speed not exact to prevent repeating pattern of gun tracer
         this.spriteRef = null;
 
         this.load();
@@ -25,8 +25,9 @@ export default class Bullet {
     draw(camera) {
         imageMode(CENTER);
         push();
-        translate(this.x + camera.x, this.y + camera.y);
-        image(this.spriteRef, 0, 0, 3, 3);
+        translate(this.x + camera.x, this.y + camera.y); // move spawn location with player
+        rotate(this.angle+radians(90)); // rotate before moving to player location
+        image(this.spriteRef, 6.667, -8, 3, 3); // spawn on tip of gun to rotate correctly
         pop();
     }
 }

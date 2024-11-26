@@ -25,7 +25,7 @@ export function makeLevel1(setScene) {
             this.gun.setup();
             this.camera.attachTo(this.player); 
             // creates zombies
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < 0; i++) {
                 this.zombies.push(new Zombie());
             }
         },
