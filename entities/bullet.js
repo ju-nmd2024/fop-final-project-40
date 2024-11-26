@@ -3,7 +3,13 @@ export default class Bullet {
         this.x = x;
         this.y = y;
         this.angle = angle;
-        this.speed = Math.random()*2+4;
+        this.speed = Math.random()*2+3;
+        this.spriteRef = null;
+
+        this.load();
+    }
+    load() {
+        this.spriteRef = loadImage('./assets/bullet.png');
     }
     update(zombies, bullets) {
         this.x += Math.cos(this.angle) * this.speed;
@@ -17,8 +23,10 @@ export default class Bullet {
         }
     }
     draw(camera) {
+        imageMode(CENTER);
         push();
-        ellipse(this.x + camera.x, this.y + camera.y, 5);
+        translate(this.x + camera.x, this.y + camera.y);
+        image(this.spriteRef, 0, 0, 3, 3);
         pop();
     }
 }

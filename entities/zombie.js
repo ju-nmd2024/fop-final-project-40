@@ -29,38 +29,68 @@ export default class Zombie extends Entity {
     this.spawnRate = 50; // Spawns a new zombie
     this.lastSpawnTime = 0; // Tracks when the last zombie spawned
     this.maxZombieCount = 20; // max zombies on screen
-    this.size = 20;
+    this.size = 15;
 
     this.load();
     this.loadAnim();
     this.setup();
   }
   load() {
-    this.spriteRef = loadImage('./assets/player.png');
+    this.spriteRef = loadImage('./assets/zombie.png');
   }
   loadAnim() {
     this.frames = getFramesPos(3, 1, this.width+1, this.height+1);
 
     // animations
     this.anims = {
-        "idle": 0,
+        "idle": 0, // this is unused
         "run": {from: 1, to: 2, loop: true, speed: 7},
     };
   }
 
-
   setup() {
     this.loadAnim();
-    this.setAnim("idle");
+    this.setAnim("run");
   }
 
+  update() {
+    //prev timer
+    this.animationTimer += deltaTime; // make timer
 
-  draw(camera) {
-      // zombie
-      push();
-      fill(0, 255, 0);
-      noStroke();
-      ellipse(this.x + camera.x, this.y + camera.y, this.size);
-      pop();
-    }
+    const animData = this.anims[this.currentAnim];
+    this.currentFrameData = this.setAnimFrame(animData);
+  }
+
+  draw(camera, player) {
+    
+    /* zombie circle
+    push();
+    fill(0, 255, 0);
+    noStroke();
+    ellipse(this.x + camera.x, this.y + camera.y, this.size);
+    pop();
+    */
+
+
+
+    imageMode(CENTER);
+    push();
+    translate(this.x + camera.x, this.y + camera.y);
+    let dx = player.x - this.x;
+    let dy = player.y - this.y;
+    this.spriteR = atan2(dy, dx);
+
+    rotate(this.spriteR+radians(90));
+
+    drawSprite(
+        this.spriteRef,
+        0,
+        0,
+        this.currentFrameData.x,
+        this.currentFrameData.y,
+        this.width,
+        this.height
+    );
+    pop();
+  }
 }

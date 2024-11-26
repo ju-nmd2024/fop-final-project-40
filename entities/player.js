@@ -75,10 +75,10 @@ export default class Player extends Entity {
         imageMode(CENTER);
         push();
         translate(192/2, 108/2);
-        
-        push();
 
         // rotation code inspired by https://discourse.processing.org/t/rotation-based-on-mouse/1766
+        // this takes half of width & height and multiplies it by the upscale of our window (then lastly fixes the rotation offset)
+        this.spriteR = (Math.atan2(window.mouseY-(108/2)*6, window.mouseX-(192/2)*6)+ radians(90));
 
         this.spriteRSmooth = lerpAngle(this.spriteRSmooth, this.spriteR, 0.2);
         rotate(this.spriteRSmooth);
@@ -93,14 +93,6 @@ export default class Player extends Entity {
         );
         pop();
 
-        push();
-        // this takes half of width & height and multiplies it by the upscale of our window (then lastly fixes the rotation offset)
-        this.spriteR = (Math.atan2(window.mouseY-(108/2)*6, window.mouseX-(192/2)*6)+ radians(90));
-        rotate(this.spriteR);
-
-        pop();
-
-        pop();
 
         push();
         //this.viewportX = (this.x + camera.x);
