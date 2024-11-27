@@ -15,8 +15,8 @@ export default class Zombie extends Entity {
     super();
 
     this.speed = 0.5; // zombie speed
-    this.x = Math.random() * (200) - 100;
-    this.y = Math.random() * (200) - 100;
+    this.x = Math.random() * (400) - 200;
+    this.y = Math.random() * (400) - 200;
     this.spriteX = 0;
     this.spriteY = 0;
     this.spriteR = 0;
@@ -30,6 +30,8 @@ export default class Zombie extends Entity {
     this.lastSpawnTime = 0; // Tracks when the last zombie spawned
     this.maxZombieCount = 20; // max zombies on screen
     this.size = 15;
+
+    this.hp = 20;
 
     this.load();
     this.loadAnim();

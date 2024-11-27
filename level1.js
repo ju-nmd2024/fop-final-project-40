@@ -3,17 +3,21 @@ import Player from "./entities/player.js";
 import Gun from "./entities/gun.js";
 import Zombie from "./entities/zombie.js";
 
+import UI from "./ui.js";
+
 
 export function makeLevel1(setScene) {
     const camera = new Camera(0, 0);
     const player = new Player(0, 0);
     const gun = new Gun(0, 0);
+    const ui = new UI();
     const zombies = [];
     const bullets = [];
     return {
         camera: camera,
         player: player,
         gun: gun,
+        ui: ui,
         zombies: zombies,
         bullets: bullets,
         load() {
@@ -25,7 +29,7 @@ export function makeLevel1(setScene) {
             this.gun.setup();
             this.camera.attachTo(this.player); 
             // creates zombies
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 10; i++) {
                 this.zombies.push(new Zombie());
             }
         },
@@ -41,6 +45,10 @@ export function makeLevel1(setScene) {
                 bullet.update(this.zombies, this.bullets, this.player);
             }
 
+            if (frameCount % 12 === 0) {
+                this.player.damage(this.zombies);
+            }
+            
             // zombie movement
             for (let i = 0; i < this.zombies.length; i++) {
                 let zombie = this.zombies[i];
@@ -82,6 +90,8 @@ export function makeLevel1(setScene) {
             for (let zombie of this.zombies) {
                 zombie.draw(this.camera, this.player);
             }
+
+            this.ui.draw(this.player)
         },
     };
 }

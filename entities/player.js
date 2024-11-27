@@ -14,6 +14,8 @@ export default class Player extends Entity {
         this.spriteY = 0;
         this.spriteR = 0;
         this.spriteRSmooth = 0;
+
+        this.hp = 100;
     }
     load() {
         this.spriteRef = loadImage('./assets/player.png');
@@ -99,6 +101,15 @@ export default class Player extends Entity {
         //this.viewportY = (this.y + camera.y);
         pop();
     }
+
+    damage(zombies) {
+        for (let zombie of zombies) {
+            let distance = dist(this.x, this.y, zombie.x, zombie.y)
+            if (distance < 16 && this.hp > 0) {
+                this.hp -= 10;
+            }
+        }
+    }
 }
 
 
@@ -109,7 +120,7 @@ function lerpAngle(a, b, step) {
 	if (delta == 0.0) {
 		return a;
 	} else if (delta < -PI) {
-		b += TWO_PI;
+		a -= TWO_PI;
 	} else if (delta > PI) {
 		a += TWO_PI;
 	}

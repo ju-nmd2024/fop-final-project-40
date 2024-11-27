@@ -17,8 +17,16 @@ export default class Bullet {
 
         for (let zombie of zombies) {
             if (dist(zombie.x, zombie.y, this.x, this.y) < zombie.size) {
-                zombies.splice(zombies.indexOf(zombie), 1);
+                zombie.hp -= 5;
                 bullets.splice(bullets.indexOf(this), 1);
+
+                for (let i = 0; i > 10; i++) {
+                    
+                    text("-10", 50, 50);
+                }
+            }
+            if (zombie.hp <= 0) {
+                zombies.splice(zombies.indexOf(zombie), 1);
             }
         }
 
