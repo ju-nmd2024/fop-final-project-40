@@ -112,15 +112,6 @@ export default class Player extends Entity {
     }
   }
 
-  healedBy(bandages) {
-    for (let bandage of bandages) {
-      let distance = dist(this.x, this.y, bandage.x, bandage.y);
-      if (distance < 16 && this.hp > 0) {
-        this.hp += 10;
-      }
-    }
-  }
-
   pushedBy(zombies) {
     for (let zombie of zombies) {
       let distance = dist(zombie.x, zombie.y, this.x, this.y);

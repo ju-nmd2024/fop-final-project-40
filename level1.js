@@ -46,6 +46,7 @@ export function makeLevel1(setScene) {
       this.player.update();
       this.gun.update(this.bullets, this.player);
       this.camera.update();
+      collisionWith(this.player, this.bandages);
 
       for (let bandage of this.bandages) {
         bandage.update(this.player);
@@ -60,6 +61,10 @@ export function makeLevel1(setScene) {
       if (frameCount % 12 === 0) {
         this.player.damageBy(this.zombies);
       }
+
+     
+
+      
 
       // zombie movement
       for (let i = 0; i < this.zombies.length; i++) {
