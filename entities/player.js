@@ -36,16 +36,16 @@ export default class Player extends Entity {
             x: 0,
             y: 0,
         }
-        if (keyIsDown(68)) {
+        if (keyIsDown(68) || keyIsDown(39)) {
             move.x += moveBy;
         }
-        if (keyIsDown(65)) {
+        if (keyIsDown(65) || keyIsDown(37)) {
             move.x -= moveBy;
         }
-        if (keyIsDown(87)) {
+        if (keyIsDown(87) || keyIsDown(38)) {
             move.y -= moveBy;
         }
-        if (keyIsDown(83)) {
+        if (keyIsDown(83) || keyIsDown(40)) {
             move.y += moveBy;
         }
         if (move.x === 0 && move.y === 0) {
