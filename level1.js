@@ -41,7 +41,7 @@ export function makeLevel1(setScene) {
             this.gun.update(this.bullets, this.player);
             this.camera.update(); 
             for (let zombie of this.zombies) {
-                zombie.update();
+                zombie.update(this.player);
             }
             for (let bullet of this.bullets) {
                 bullet.update(this.zombies, this.bullets, this.player, this.camera);
@@ -59,10 +59,14 @@ export function makeLevel1(setScene) {
                 let dy = this.player.y - zombie.y;
                 let angle = atan2(dy, dx);
                 
-                // move zombie in that direction
-                zombie.x += cos(angle) * zombie.speed;
-                zombie.y += sin(angle) * zombie.speed;
-        
+                // move zombie in that direction unless already next to player
+                if (dist(this.player.x, this.player.y, zombie.x, zombie.y) < zombie.size+1) {
+
+                } else {
+                    zombie.x += cos(angle) * zombie.speed;
+                    zombie.y += sin(angle) * zombie.speed;
+                }
+
                 // to make sure the zombies do not stack up if player moves
                 // creating a repel system
                 for (let j = 0; j < this.zombies.length; j++) {

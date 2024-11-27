@@ -34,22 +34,32 @@ export default class Zombie extends Entity {
     this.spriteRef = loadImage('./assets/zombie.png');
   }
   loadAnim() {
-    this.frames = getFramesPos(3, 1, this.width+1, this.height+1);
+    this.frames = getFramesPos(2, 2, this.width+1, this.height+1);
 
     // animations
     this.anims = {
-        "idle": 0, // this is unused
-        "run": {from: 1, to: 2, loop: true, speed: 7},
+        "run": {from: 0, to: 1, loop: true, speed: 3},
+        "hit": {from: 2, to: 3, loop: true, speed: 7},
     };
+  }
+  animSwitch(player) {
+    let distance = dist(this.x, this.y, player.x, player.y);
+    if (distance < this.size + 2) {
+      this.setAnim("hit");
+    } else {
+      this.setAnim("run");
+    }
   }
 
   setup() {
     this.loadAnim();
     this.setAnim("run");
   }
-  update() {
+  update(player) {
     //prev timer
     this.animationTimer += deltaTime; // make timer
+
+    this.animSwitch(player)
 
     const animData = this.anims[this.currentAnim];
     this.currentFrameData = this.setAnimFrame(animData);
