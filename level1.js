@@ -2,6 +2,7 @@ import Camera from "./entities/camera.js";
 import Player from "./entities/player.js";
 import Gun from "./entities/gun.js";
 import Zombie from "./entities/zombie.js";
+import DamageParticle from "./entities/particleDamage.js"
 
 import UI from "./ui.js";
 
@@ -29,7 +30,7 @@ export function makeLevel1(setScene) {
             this.gun.setup();
             this.camera.attachTo(this.player); 
             // creates zombies
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < 1; i++) {
                 this.zombies.push(new Zombie());
             }
             ui.setup(this.player);
@@ -40,14 +41,14 @@ export function makeLevel1(setScene) {
             this.gun.update(this.bullets, this.player);
             this.camera.update(); 
             for (let zombie of this.zombies) {
-                zombie.update();
+                zombie.update(this.player);
             }
             for (let bullet of this.bullets) {
-                bullet.update(this.zombies, this.bullets, this.player);
+                bullet.update(this.zombies, this.bullets, this.player, this.camera);
             }
 
             if (frameCount % 12 === 0) {
-                this.player.damage(this.zombies);
+                this.player.damageBy(this.zombies);
             }
             
             // zombie movement
@@ -58,10 +59,14 @@ export function makeLevel1(setScene) {
                 let dy = this.player.y - zombie.y;
                 let angle = atan2(dy, dx);
                 
-                // move zombie in that direction
-                zombie.x += cos(angle) * zombie.speed;
-                zombie.y += sin(angle) * zombie.speed;
-        
+                // move zombie in that direction unless already next to player
+                if (dist(this.player.x, this.player.y, zombie.x, zombie.y) < zombie.size+1) {
+
+                } else {
+                    zombie.x += cos(angle) * zombie.speed;
+                    zombie.y += sin(angle) * zombie.speed;
+                }
+
                 // to make sure the zombies do not stack up if player moves
                 // creating a repel system
                 for (let j = 0; j < this.zombies.length; j++) {
@@ -78,8 +83,8 @@ export function makeLevel1(setScene) {
                 }
             }
 
-            // push player from zombies
-            this.player.pushing(this.zombies);
+            // push player
+            this.player.pushedBy(this.zombies);
         },
 
         draw() {
@@ -89,7 +94,7 @@ export function makeLevel1(setScene) {
             this.player.draw(this.camera);
             this.gun.draw(this.camera);
             for (let bullet of this.bullets) {
-                bullet.draw(this.camera);
+                bullet.draw(this.camera, this.zombies);
             }
             for (let zombie of this.zombies) {
                 zombie.draw(this.camera, this.player);

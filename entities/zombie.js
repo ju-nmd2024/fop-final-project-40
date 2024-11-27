@@ -1,15 +1,6 @@
 import Entity from "./entity.js";
 import { getFramesPos, drawSprite } from "../utils.js";
 
-// Zombies spawning on random position from canvas width & height
-// Zombies moving towards the players movement
-// they have a slight repel so that they do not stack up
-// unless the player stays still
-
-// there is no collision
-// either we have zombies spawning overtime
-// or having one spawn when another one dies, (this i have not done)
-
 export default class Zombie extends Entity {
   constructor(x, y) {
     super();
@@ -32,6 +23,8 @@ export default class Zombie extends Entity {
     this.size = 15;
 
     this.hp = 20;
+    this.tint = 255;
+    this.particle = [];
 
     this.load();
     this.loadAnim();
@@ -41,23 +34,32 @@ export default class Zombie extends Entity {
     this.spriteRef = loadImage('./assets/zombie.png');
   }
   loadAnim() {
-    this.frames = getFramesPos(3, 1, this.width+1, this.height+1);
+    this.frames = getFramesPos(2, 2, this.width+1, this.height+1);
 
     // animations
     this.anims = {
-        "idle": 0, // this is unused
-        "run": {from: 1, to: 2, loop: true, speed: 7},
+        "run": {from: 0, to: 1, loop: true, speed: 3},
+        "hit": {from: 2, to: 3, loop: true, speed: 7},
     };
+  }
+  animSwitch(player) {
+    let distance = dist(this.x, this.y, player.x, player.y);
+    if (distance < this.size + 2) {
+      this.setAnim("hit");
+    } else {
+      this.setAnim("run");
+    }
   }
 
   setup() {
     this.loadAnim();
     this.setAnim("run");
   }
-
-  update() {
+  update(player) {
     //prev timer
     this.animationTimer += deltaTime; // make timer
+
+    this.animSwitch(player)
 
     const animData = this.anims[this.currentAnim];
     this.currentFrameData = this.setAnimFrame(animData);
@@ -77,6 +79,9 @@ export default class Zombie extends Entity {
 
     imageMode(CENTER);
     push();
+
+    tint(this.tint);
+
     translate(this.x + camera.x, this.y + camera.y);
     let dx = player.x - this.x;
     let dy = player.y - this.y;
