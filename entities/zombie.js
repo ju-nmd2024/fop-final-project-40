@@ -37,8 +37,8 @@ export default class Zombie extends Entity {
 
     // animations
     this.anims = {
-      run: { from: 0, to: 1, loop: true, speed: 3 },
-      hit: { from: 2, to: 3, loop: true, speed: 7 },
+      "run": { from: 0, to: 1, loop: true, speed: 3 },
+      "hit": { from: 2, to: 3, loop: true, speed: 7 },
     };
   }
   animSwitch(player) {
