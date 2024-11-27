@@ -1,3 +1,5 @@
+import DamageParticle from "./particleDamage.js";
+
 export default class Bullet {
     constructor(x, y, angle) {
         this.angle = angle;
@@ -6,27 +8,29 @@ export default class Bullet {
         this.speed = Math.random()*2+3; // speed not exact to prevent repeating pattern of gun tracer
         this.spriteRef = null;
 
+
         this.load();
     }
     load() {
         this.spriteRef = loadImage('./assets/bullet.png');
     }
-    update(zombies, bullets, player) {
+    update(zombies, bullets, player, camera) {
         this.x += Math.cos(this.angle) * this.speed;
         this.y += Math.sin(this.angle) * this.speed;
 
+        let particles = [];
+
         for (let zombie of zombies) {
             if (dist(zombie.x, zombie.y, this.x, this.y) < zombie.size/2) {
+                particles.push(new DamageParticle(camera, -2, zombie));
                 zombie.hp -= 2;
                 bullets.splice(bullets.indexOf(this), 1);
-
-                for (let i = 0; i > 10; i++) {
-                    
-                    text("-2", 50, 50);
-                }
             }
             if (zombie.hp <= 0) {
                 zombies.splice(zombies.indexOf(zombie), 1);
+            }
+            for (let particle of particles) {
+                particle.draw();
             }
         }
 

@@ -102,7 +102,7 @@ export default class Player extends Entity {
         pop();
     }
 
-    damage(zombies) {
+    damageBy(zombies) {
         for (let zombie of zombies) {
             let distance = dist(this.x, this.y, zombie.x, zombie.y)
             if (distance < 16 && this.hp > 0) {
@@ -110,7 +110,7 @@ export default class Player extends Entity {
             }
         }
     }
-    pushing(zombies) {
+    pushedBy(zombies) {
         for (let zombie of zombies) {
             let distance = dist(zombie.x, zombie.y, this.x, this.y);
             if (distance < 15) {
@@ -129,7 +129,7 @@ export default class Player extends Entity {
 function lerpAngle(a, b, step) {
 	// Prefer shortest distance,
 	const delta = b - a;
-	if (delta == 0.0) {
+	if (delta === 0.0) {
 		return a;
 	} else if (delta < -PI) {
 		a -= TWO_PI;

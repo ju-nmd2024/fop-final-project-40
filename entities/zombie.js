@@ -1,15 +1,6 @@
 import Entity from "./entity.js";
 import { getFramesPos, drawSprite } from "../utils.js";
 
-// Zombies spawning on random position from canvas width & height
-// Zombies moving towards the players movement
-// they have a slight repel so that they do not stack up
-// unless the player stays still
-
-// there is no collision
-// either we have zombies spawning overtime
-// or having one spawn when another one dies, (this i have not done)
-
 export default class Zombie extends Entity {
   constructor(x, y) {
     super();
@@ -32,6 +23,8 @@ export default class Zombie extends Entity {
     this.size = 15;
 
     this.hp = 20;
+    this.tint = 255;
+    this.particle = [];
 
     this.load();
     this.loadAnim();
@@ -54,7 +47,6 @@ export default class Zombie extends Entity {
     this.loadAnim();
     this.setAnim("run");
   }
-
   update() {
     //prev timer
     this.animationTimer += deltaTime; // make timer
@@ -77,6 +69,9 @@ export default class Zombie extends Entity {
 
     imageMode(CENTER);
     push();
+
+    tint(this.tint);
+
     translate(this.x + camera.x, this.y + camera.y);
     let dx = player.x - this.x;
     let dy = player.y - this.y;
