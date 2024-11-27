@@ -110,6 +110,18 @@ export default class Player extends Entity {
             }
         }
     }
+    pushing(zombies) {
+        for (let zombie of zombies) {
+            let distance = dist(zombie.x, zombie.y, this.x, this.y);
+            if (distance < 15) {
+                let pushAngle = Math.atan2(zombie.y - this.y, zombie.x - this.x);
+
+                this.x -= Math.cos(pushAngle) * 1;
+                this.y -= Math.sin(pushAngle) * 1;
+
+            }
+        }
+    }
 }
 
 

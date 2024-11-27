@@ -68,14 +68,14 @@ export default class Gun extends Entity {
     this.setAnim("idle");
   }
 
-  update(bullets) {
+  update(bullets, player) {
     //prev timer
     this.animationTimer += deltaTime; // make timer
 
     if (mouseIsPressed && !this.prevPress) {
       //this.shoot(); // calls the shooting method for the bullets
       this.setAnim("shoot");
-      bullets.push(new Bullet(this.x, this.y, (this.spriteR)-radians(90)));
+      bullets.push(new Bullet(player.x, player.y, (this.spriteR)-radians(90)));
     }
     this.prevPress = mouseIsPressed;
 

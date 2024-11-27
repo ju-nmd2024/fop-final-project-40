@@ -32,11 +32,12 @@ export function makeLevel1(setScene) {
             for (let i = 0; i < 10; i++) {
                 this.zombies.push(new Zombie());
             }
+            ui.setup(this.player);
         },
 
         update() {
             this.player.update();
-            this.gun.update(this.bullets);
+            this.gun.update(this.bullets, this.player);
             this.camera.update(); 
             for (let zombie of this.zombies) {
                 zombie.update();
@@ -69,13 +70,16 @@ export function makeLevel1(setScene) {
                         let distance = dist(zombie.x, zombie.y, other.x, other.y);
             
                         if (distance < zombie.size) {
-                        let repelAngle = atan2(zombie.y - other.y, zombie.x - other.x);
-                        zombie.x += cos(repelAngle) * 0.5; // the amount of repelling (x)
-                        zombie.y += sin(repelAngle) * 0.5; // the amount of repelling (y)
+                            let repelAngle = atan2(zombie.y - other.y, zombie.x - other.x);
+                            zombie.x += cos(repelAngle) * 0.5; // the amount of repelling (x)
+                            zombie.y += sin(repelAngle) * 0.5; // the amount of repelling (y)
                         }
                     }
                 }
             }
+
+            // push player from zombies
+            this.player.pushing(this.zombies);
         },
 
         draw() {

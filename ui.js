@@ -1,15 +1,23 @@
 export default class UI {
     constructor() {
+        this.maxHP = null;
+    }
+    setup(player) {
+        this.maxHP = player.hp;
     }
     draw(player) {
         push();
+        // background
         stroke(50, 0, 0);
         fill(50, 0, 0);
-        rect(5, 5, 100, 10);
+        rect(3, 3, this.maxHP/1.8, 5);
+        // bar
         fill(255, 0, 0);
-        rect(5, 5, player.hp, 10);
-
-        text(player.hp, 30, 30);
+        rect(3, 3, player.hp/1.8, 5);
+        // text
+        textSize(5);
+        strokeWeight(1.8);
+        text(player.hp, 61, 7.3);
         pop();
     }
 }

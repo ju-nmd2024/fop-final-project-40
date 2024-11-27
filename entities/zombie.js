@@ -14,7 +14,7 @@ export default class Zombie extends Entity {
   constructor(x, y) {
     super();
 
-    this.speed = 0.5; // zombie speed
+    this.speed = 0.2; // zombie speed
     this.x = Math.random() * (400) - 200;
     this.y = Math.random() * (400) - 200;
     this.spriteX = 0;
