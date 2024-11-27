@@ -26,8 +26,8 @@ export default class Player extends Entity {
 
     // animations
     this.anims = {
-      idle: 0,
-      run: { from: 1, to: 2, loop: true, speed: 7 },
+      "idle": 0,
+      "run": { from: 1, to: 2, loop: true, speed: 7 },
     };
   }
 
