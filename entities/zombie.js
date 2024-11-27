@@ -6,13 +6,12 @@ export default class Zombie extends Entity {
     super();
 
     this.speed = 0.2; // zombie speed
-    this.x = Math.random() * (400) - 200;
-    this.y = Math.random() * (400) - 200;
+    this.x = Math.random() * 400 - 200;
+    this.y = Math.random() * 400 - 200;
     this.spriteX = 0;
     this.spriteY = 0;
     this.spriteR = 0;
     this.spriteRSmooth = 0;
-
 
     this.zombies = [];
     this.screenWidth = 192;
@@ -31,15 +30,15 @@ export default class Zombie extends Entity {
     this.setup();
   }
   load() {
-    this.spriteRef = loadImage('./assets/zombie.png');
+    this.spriteRef = loadImage("./assets/zombie.png");
   }
   loadAnim() {
-    this.frames = getFramesPos(2, 2, this.width+1, this.height+1);
+    this.frames = getFramesPos(2, 2, this.width + 1, this.height + 1);
 
     // animations
     this.anims = {
-        "run": {from: 0, to: 1, loop: true, speed: 3},
-        "hit": {from: 2, to: 3, loop: true, speed: 7},
+      run: { from: 0, to: 1, loop: true, speed: 3 },
+      hit: { from: 2, to: 3, loop: true, speed: 7 },
     };
   }
   animSwitch(player) {
@@ -59,14 +58,13 @@ export default class Zombie extends Entity {
     //prev timer
     this.animationTimer += deltaTime; // make timer
 
-    this.animSwitch(player)
+    this.animSwitch(player);
 
     const animData = this.anims[this.currentAnim];
     this.currentFrameData = this.setAnimFrame(animData);
   }
 
   draw(camera, player) {
-    
     /* zombie circle
     push();
     fill(0, 255, 0);
@@ -74,8 +72,6 @@ export default class Zombie extends Entity {
     ellipse(this.x + camera.x, this.y + camera.y, this.size);
     pop();
     */
-
-
 
     imageMode(CENTER);
     push();
@@ -87,16 +83,16 @@ export default class Zombie extends Entity {
     let dy = player.y - this.y;
     this.spriteR = atan2(dy, dx);
 
-    rotate(this.spriteR+radians(90));
+    rotate(this.spriteR + radians(90));
 
     drawSprite(
-        this.spriteRef,
-        0,
-        0,
-        this.currentFrameData.x,
-        this.currentFrameData.y,
-        this.width,
-        this.height
+      this.spriteRef,
+      0,
+      0,
+      this.currentFrameData.x,
+      this.currentFrameData.y,
+      this.width,
+      this.height
     );
     pop();
   }
