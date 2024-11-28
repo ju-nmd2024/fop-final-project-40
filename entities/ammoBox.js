@@ -15,13 +15,13 @@ export default class Ammo extends Entity {
     this.setup();
   }
   load() {
-    this.spriteRef = loadImage("./assets/bandages.png");
+    this.spriteRef = loadImage("./assets/ammo.png");
   }
   loadAnim() {
     this.frames = getFramesPos(4, 4, this.width + 1, this.height + 1);
     // animations
     this.anims = {
-      "loop": { from: 0, to: 15, loop: true, speed: 7 },
+      "loop": { from: 0, to: 14, loop: true, speed: 7 },
     };
   }
   setup() {
@@ -37,14 +37,14 @@ export default class Ammo extends Entity {
   }
   
   draw(camera){
-    // ball
+    /* ball
     push();
     noStroke();
     fill(125,120,100);
     ellipse(this.x + camera.x, this.y + camera.y, this.width);
-    pop();
+    pop(); */
 
-    /*drawSprite(
+    drawSprite(
       this.spriteRef,
       this.x + camera.x,
       this.y + camera.y,
@@ -52,7 +52,7 @@ export default class Ammo extends Entity {
       this.currentFrameData.y,
       this.width,
       this.height
-    );*/
+    );
   }    
 
   collisionWith(player, gun, ammoBoxes, ui){ 
