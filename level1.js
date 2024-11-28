@@ -49,6 +49,7 @@ export function makeLevel1(setScene) {
       this.camera.update();
 
       for (let bandage of this.bandages) {
+        bandage.update();
         bandage.collisionWith(this.player, this.bandages, this.ui);
       }
 
@@ -109,6 +110,9 @@ export function makeLevel1(setScene) {
       clear();
       background(0);
       rect(0 + this.camera.x, 0 + this.camera.y, 50, 50);
+      for (let bandage of this.bandages) {
+        bandage.draw(this.camera);
+      }
       this.player.draw(this.camera);
       this.gun.draw(this.camera);
       for (let bullet of this.bullets) {
@@ -116,9 +120,6 @@ export function makeLevel1(setScene) {
       }
       for (let zombie of this.zombies) {
         zombie.draw(this.camera, this.player);
-      }
-      for (let bandage of this.bandages) {
-        bandage.draw(this.camera);
       }
 
       this.ui.draw(this.player);

@@ -8,8 +8,6 @@ export default class Entity {
         this.currentFrameData = null; // where in the sprite sheet the frame is at
         this.animationTimer = 0; // to know when to switch frame
         //this.previousTime = 0;
-        this.width = 16; // entity size
-        this.height = 16; // entity size
         this.frames = [];
     }
     setAnim(name) {

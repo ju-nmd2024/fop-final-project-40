@@ -9,6 +9,8 @@ export default class Gun extends Entity {
     this.speed = 100; // player speed
     this.x = x;
     this.y = y;
+    this.width = 16;
+    this.height = 16;
     this.viewportX = x;
     this.viewportY = y;
     this.spriteX = 0;
@@ -24,12 +26,11 @@ export default class Gun extends Entity {
 
   loadAnim() {
     this.frames = getFramesPos(3, 2, this.width + 1, this.height + 1);
-    console.log(this.frames);
     // animations
     this.anims = {
-      idle: 0,
-      run: { from: 1, to: 2, loop: true, speed: 7 },
-      shoot: { from: 3, to: 5, loop: false, speed: 10 },
+      "idle": 0,
+      "run": { from: 1, to: 2, loop: true, speed: 7 },
+      "shoot": { from: 3, to: 5, loop: false, speed: 10 },
     };
   }
 

@@ -8,6 +8,8 @@ export default class Player extends Entity {
     this.speed = 100; // player speed
     this.x = x;
     this.y = y;
+    this.width = 16;
+    this.height = 16;
     this.viewportX = x;
     this.viewportY = y;
     this.spriteX = 0;
