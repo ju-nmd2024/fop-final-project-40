@@ -35,9 +35,9 @@ export default class Entity {
         if (this.currentFrame > animData.to && animData.loop) {
             this.currentFrame = animData.from;
         }
-        // if it shoudn't loop, stay on last frame
+        // if it shoudn't loop, it should reset
         if (this.currentFrame >= animData.to && !animData.loop) {
-            this.currentFrame = animData.to;
+            this.currentAnim = "idle";
         }
 
         const currentFrameData = this.frames[this.currentFrame];

@@ -22,6 +22,7 @@ export default class Gun extends Entity {
     this.ammoCount = 24;
     this.maxAmmo = null;
     this.maxMag = 4;
+    this.reloading = false;
 
     this.prevPress = false; // nånting skott sjuktit tryuckt kanpp
   }
@@ -30,12 +31,13 @@ export default class Gun extends Entity {
   }
 
   loadAnim() {
-    this.frames = getFramesPos(3, 2, this.width + 1, this.height + 1);
+    this.frames = getFramesPos(3, 3, this.width + 1, this.height + 1);
     // animations
     this.anims = {
       "idle": 0,
       "run": { from: 1, to: 2, loop: true, speed: 7 },
       "shoot": { from: 3, to: 5, loop: false, speed: 10 },
+      "reload": { from: 6, to: 8, loop: false, speed: 2 },
     };
   }
 
@@ -57,11 +59,11 @@ export default class Gun extends Entity {
       move.y += moveBy; // S
     }
     if (move.x === 0 && move.y === 0) {
-      if (!mouseIsPressed) {
+      if (!mouseIsPressed && !this.reloading) {
         this.setAnim("idle");
       }
     } else {
-      if (!mouseIsPressed) {
+      if (!mouseIsPressed && !this.reloading) {
         this.setAnim("run");
       }
       this.x += move.x;
@@ -82,11 +84,16 @@ export default class Gun extends Entity {
 
     // reload
     if (this.ammoCount === 0 && this.magCount !== 0) {
+      this.setAnim("reload");
+      this.reloading = true;
       this.ammoCount = this.maxAmmo;
       this.magCount -= 1;
     }
+    if (this.currentAnim !== "reload") {
+      this.reloading = false;
+    }
 
-    if (mouseIsPressed && !this.prevPress) { // click function
+    if (mouseIsPressed && !this.prevPress && !this.reloading) { // click function
       if (this.ammoCount > 0) { // only shoot if has ammo
         this.setAnim("shoot");
         bullets.push(new Bullet(player.x, player.y, (this.spriteR)-radians(90)));
