@@ -29,12 +29,13 @@ function healthBar(maxHP, player) {
 
 function ammoUI(gun){
     push();
+    textAlign(RIGHT, BASELINE);
     textSize(10);
     stroke(55, 20, 0);
     strokeWeight(2);
     fill(255, 220, 0);
-    text(gun.ammoCount, 174, 100);
+    text(gun.ammoCount, 184, 100);
     textSize(5);
-    text(gun.magCount+" /", 168, 100);
+    text(gun.magCount+" /", 172, 100);
     pop();
 }

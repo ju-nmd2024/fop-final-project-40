@@ -20,6 +20,7 @@ export default class Gun extends Entity {
 
     this.magCount = 2;
     this.ammoCount = 24;
+    this.maxAmmo = null;
 
     this.prevPress = false; // nånting skott sjuktit tryuckt kanpp
   }
@@ -70,16 +71,25 @@ export default class Gun extends Entity {
   setup() {
     this.loadAnim();
     this.setAnim("idle");
+
+    this.maxAmmo = this.ammoCount; // so we can restock ammo to full
   }
 
   update(bullets, player) {
     //prev timer
     this.animationTimer += deltaTime; // make timer
 
-    if (mouseIsPressed && !this.prevPress) {
-      //this.shoot(); // calls the shooting method for the bullets
-      this.setAnim("shoot");
-      bullets.push(new Bullet(player.x, player.y, (this.spriteR)-radians(90)));
+    if (this.ammoCount === 0 && this.magCount !== 0) {
+      this.ammoCount = this.maxAmmo;
+      this.magCount -= 1;
+    }
+
+    if (mouseIsPressed && !this.prevPress) { // click function
+      if (this.ammoCount > 0) { // only shoot if has ammo
+        this.setAnim("shoot");
+        bullets.push(new Bullet(player.x, player.y, (this.spriteR)-radians(90)));
+        this.ammoCount -= 1;
+      }
     }
     this.prevPress = mouseIsPressed;
 
