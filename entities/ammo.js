@@ -8,6 +8,7 @@ export default class Ammo extends Entity{
     this.y = y;
     this.size = 8;
     this.ammoBoxes = [];
+    this.maxAmmo = 24;
   } 
 
   setup(){
@@ -26,7 +27,7 @@ export default class Ammo extends Entity{
   collisionWith(player, ammoBoxes){
     
     if (dist(player.x, player.y, this.x, this.y < this.size)) {
-      // gun should get max amount of ammo? or just get a set amount? 
+      ammoBoxes = this.maxAmmo;
       ammoBoxes.splice(ammoBoxes.indexOf(this), 1);
     }
   }

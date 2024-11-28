@@ -3,13 +3,13 @@ export default class UI {
         this.maxHP = null;
         this.maxAmmo = null;
     }
-    setup(player, ammo) {
+    setup(player, ammoBoxes) {
         this.maxHP = player.hp;
-        this.maxAmmo = ammo;
+        this.maxAmmo = ammoBoxes;
     }
-    draw(player, ammo) {
+    draw(player, ammoBoxes) {
+        ammoUI(this.maxAmmo, ammoBoxes);
         healthBar(this.maxHP, player);
-        ammoUI(this.maxAmmo);
     }
 }
 
