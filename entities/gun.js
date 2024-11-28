@@ -18,6 +18,9 @@ export default class Gun extends Entity {
     this.spriteR = 0;
     this.spriteRSmooth = 0;
 
+    this.magCount = 2;
+    this.ammoCount = 24;
+
     this.prevPress = false; // nånting skott sjuktit tryuckt kanpp
   }
   load() {
