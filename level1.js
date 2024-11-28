@@ -5,6 +5,7 @@ import Zombie from "./entities/zombie.js";
 import DamageParticle from "./entities/particleDamage.js";
 
 import Bandage from "./entities/bandage.js";
+import Ammo from "./entities/ammoBox.js";
 
 import UI from "./ui.js";
 
@@ -12,18 +13,24 @@ export function makeLevel1(setScene) {
   const camera = new Camera(0, 0);
   const player = new Player(0, 0);
   const gun = new Gun(0, 0);
-  const ui = new UI();
   const zombies = [];
+
   const bullets = [];
   const bandages = [];
+  const ammoBoxes = [];
+
+  const ui = new UI();
   return {
     camera: camera,
     player: player,
     gun: gun,
-    ui: ui,
     zombies: zombies,
+
     bullets: bullets,
     bandages: bandages,
+    ammoBoxes: ammoBoxes,
+
+    ui: ui,
     load() {
       this.gun.load();
       this.player.load();
@@ -37,8 +44,12 @@ export function makeLevel1(setScene) {
         this.zombies.push(new Zombie());
       }
       // creates bandages
-      for (let i = 0; i < 1; i++) {
-        this.bandages.push(new Bandage(20 + this.camera.x, 30 + this.camera.y));
+      for (let i = 0; i < 3; i++) {
+        this.bandages.push(new Bandage((Math.random()*200-100) + this.camera.x, (Math.random()*200-100) + this.camera.y));
+      }
+      // creates ammo boxes
+      for (let i = 0; i < 3; i++) {
+        this.ammoBoxes.push(new Ammo((Math.random()*200-100) + this.camera.x, (Math.random()*200-100) + this.camera.y));
       }
       ui.setup(this.player);
     },
@@ -51,6 +62,10 @@ export function makeLevel1(setScene) {
       for (let bandage of this.bandages) {
         bandage.update();
         bandage.collisionWith(this.player, this.bandages, this.ui);
+      }
+      for (let ammoBox of this.ammoBoxes) {
+        ammoBox.update();
+        ammoBox.collisionWith(this.player, this.gun, this.ammoBoxes, this.ui);
       }
 
       for (let zombie of this.zombies) {
@@ -109,9 +124,15 @@ export function makeLevel1(setScene) {
     draw() {
       clear();
       background(0);
+      push();
+      fill(200);
       rect(0 + this.camera.x, 0 + this.camera.y, 50, 50);
+      pop();
       for (let bandage of this.bandages) {
         bandage.draw(this.camera);
+      }
+      for (let ammoBox of this.ammoBoxes) {
+        ammoBox.draw(this.camera);
       }
       this.player.draw(this.camera);
       this.gun.draw(this.camera);
