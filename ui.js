@@ -1,12 +1,15 @@
 export default class UI {
     constructor() {
         this.maxHP = null;
+        this.maxAmmo = null;
     }
-    setup(player) {
+    setup(player, ammo) {
         this.maxHP = player.hp;
+        this.maxAmmo = ammo;
     }
-    draw(player) {
+    draw(player, ammo) {
         healthBar(this.maxHP, player);
+        ammoUI(this.maxAmmo);
     }
 }
 
@@ -24,4 +27,13 @@ function healthBar(maxHP, player) {
     strokeWeight(1.8);
     text(player.hp, 61, 7.3);
     pop();
+}
+
+function ammoUI(){
+    push();
+
+
+    pop();
+    
+
 }

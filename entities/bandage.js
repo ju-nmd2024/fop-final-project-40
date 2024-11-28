@@ -16,6 +16,7 @@ export default class Bandage extends Entity {
     }
 
   draw(){
+    fill(255,0,0);
     ellipse(this.x,this.y, this.size, this.size);
   }
 

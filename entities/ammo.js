@@ -1,24 +1,33 @@
-let ammo;
+import Entity from "./entity.js";
 
-function setup() {
-  ammo = new Ammo(24); // Initialize the ammo with 24 bullets
-}
 
-function draw() {
-  ammo.display();
-}
-
-class Ammo {
-  constructor(initialAmmo) {
-    this.ammo = initialAmmo;
+export default class Ammo extends Entity{
+  constructor(x,y) {
+    super();
+    this.x = x;
+    this.y = y;
+    this.size = 8;
+    this.ammoBoxes = [];
   } 
 
-  display() {
-    push();
-    textAlign(RIGHT, BOTTOM);
-    textSize(24);
-    fill(255, 0, 0);
-    text(`Ammo: ${this.ammo}`, width - 50, height - 50); // Display in bottom-right corner
-    pop();
+  setup(){
+    for( let i = ammoBoxes.length - 1; i>= 0; i--){
+      ammoBoxes[i].draw();
+      }
+  }
+
+  draw(){
+    fill(128);
+    ellipse(this.x,this.y, this.size, this.size);
+  }
+
+  
+
+  collisionWith(player, ammoBoxes){
+    
+    if (dist(player.x, player.y, this.x, this.y < this.size)) {
+      // gun should get max amount of ammo? or just get a set amount? 
+      ammoBoxes.splice(ammoBoxes.indexOf(this), 1);
+    }
   }
 }

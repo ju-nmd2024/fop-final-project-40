@@ -6,6 +6,7 @@ import DamageParticle from "./entities/particleDamage.js";
 
 import UI from "./ui.js";
 import Bandage from "./entities/bandage.js";
+//import Ammo from "./entities/ammo.js";
 
 export function makeLevel1(setScene) {
   const camera = new Camera(0, 0);
@@ -15,6 +16,7 @@ export function makeLevel1(setScene) {
   const zombies = [];
   const bullets = [];
   const bandages = [];
+ // const ammoBoxes = [];
   return {
     camera: camera,
     player: player,
@@ -23,6 +25,7 @@ export function makeLevel1(setScene) {
     zombies: zombies,
     bullets: bullets,
     bandages: bandages,
+   // ammoBoxes: ammoBoxes,
     load() {
       this.gun.load();
       this.player.load();
@@ -39,6 +42,10 @@ export function makeLevel1(setScene) {
       for (let i = 0; i < 1; i++) {
         this.bandages.push(new Bandage());
       }
+      // creates ammoBoxes
+     /* for (let i = 0; i < 1; i++) {
+        this.ammoBoxes.push(new Ammo());
+      }*/
       ui.setup(this.player);
     },
 
@@ -46,11 +53,14 @@ export function makeLevel1(setScene) {
       this.player.update();
       this.gun.update(this.bullets, this.player);
       this.camera.update();
-      collisionWith(this.player, this.bandages);
+      collisionWith(this.player, this.bandages/*, this.ammoBoxes*/);
 
       for (let bandage of this.bandages) {
         bandage.update(this.player);
       }
+      /*for (let ammo of this.ammoBoxes) {
+        ammo.update(this.player);
+      }*/
       for (let zombie of this.zombies) {
         zombie.update(this.player);
       }
@@ -119,6 +129,9 @@ export function makeLevel1(setScene) {
       for (let bandage of this.bandages) {
         bandage.draw(this.camera, this.player);
       }
+      /*for (let ammo of this.ammoBoxes) {
+        ammo.draw(this.camera, this.player);
+      }*/
 
       this.ui.draw(this.player);
     },
