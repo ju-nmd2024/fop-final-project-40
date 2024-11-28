@@ -6,33 +6,17 @@ export default class Bandage extends Entity {
     this.x = x;
     this.y = y;
     this.size = 8;  
-    this.bandages = [];
   }
-  setup(){
-
-    for( let i = bandages.length - 1; i>= 0; i--){
-      bandages[i].draw();
-      }
-    }
-
-  draw(){
+  
+  draw(camera){
+    push();
     fill(255,0,0);
-    ellipse(this.x,this.y, this.size, this.size);
-  }
+    ellipse(this.x + camera.x, this.y + camera.y, this.size);
+    pop();
+  }    
 
-  healedBy(bandages) {
-    for (let bandage of bandages) {
-      let distance = dist(this.x, this.y, bandage.x, bandage.y);
-      if (distance < 16 && this.hp > 0) {
-        this.hp += 10;
-      }
-    }
-  }      
-
-
-  collisionWith(player, bandages){
-    
-      if (dist(player.x, player.y, this.x, this.y < this.size)) {
+  collisionWith(player, bandages, ui){ 
+      if (dist(player.x, player.y, this.x, this.y) < this.size && player.hp < (ui.maxHP-10)) {
         player.hp += 10;
         bandages.splice(bandages.indexOf(this), 1);
       }
