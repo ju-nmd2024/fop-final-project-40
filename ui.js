@@ -5,8 +5,8 @@ export default class UI {
     setup(player) {
         this.maxHP = player.hp;
     }
-    draw(player, ammoBoxes) {
-        ammoUI(this.maxAmmo, ammoBoxes);
+    draw(player, gun) {
+        ammoUI(gun);
         healthBar(this.maxHP, player);
     }
 }
@@ -27,11 +27,14 @@ function healthBar(maxHP, player) {
     pop();
 }
 
-function ammoUI(){
+function ammoUI(gun){
     push();
-
-
+    textSize(10);
+    stroke(55, 20, 0);
+    strokeWeight(2);
+    fill(255, 220, 0);
+    text(gun.ammoCount, 174, 100);
+    textSize(5);
+    text(gun.magCount+" /", 168, 100);
     pop();
-    
-
 }

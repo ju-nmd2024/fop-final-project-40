@@ -122,7 +122,7 @@ export function makeLevel1(setScene) {
         zombie.draw(this.camera, this.player);
       }
 
-      this.ui.draw(this.player);
+      this.ui.draw(this.player, this.gun);
     },
   };
 }
