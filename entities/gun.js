@@ -36,7 +36,7 @@ export default class Gun extends Entity {
     this.anims = {
       "idle": 0,
       "run": { from: 1, to: 2, loop: true, speed: 7 },
-      "shoot": { from: 3, to: 5, loop: false, speed: 10 },
+      "shoot": { from: 3, to: 5, loop: false, speed: 6 },
       "reload": { from: 6, to: 8, loop: false, speed: 2 },
     };
   }
@@ -59,11 +59,11 @@ export default class Gun extends Entity {
       move.y += moveBy; // S
     }
     if (move.x === 0 && move.y === 0) {
-      if (!mouseIsPressed && !this.reloading) {
+      if (this.currentAnim != "shoot" && !this.reloading) {
         this.setAnim("idle");
       }
     } else {
-      if (!mouseIsPressed && !this.reloading) {
+      if (this.currentAnim != "shoot" && !this.reloading) {
         this.setAnim("run");
       }
       this.x += move.x;
@@ -93,7 +93,8 @@ export default class Gun extends Entity {
       this.reloading = false;
     }
 
-    if (mouseIsPressed && !this.prevPress && !this.reloading) { // click function
+    // shoot
+    if (mouseIsPressed && !this.prevPress && !this.reloading && this.currentAnim != "shoot") { // click function
       if (this.ammoCount > 0) { // only shoot if has ammo
         this.setAnim("shoot");
         bullets.push(new Bullet(player.x, player.y, (this.spriteR)-radians(90)));
