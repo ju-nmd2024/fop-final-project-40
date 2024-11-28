@@ -15,8 +15,8 @@ export default class Bandage extends Entity {
     pop();
   }    
 
-  collisionWith(player, bandages){ 
-      if (dist(player.x, player.y, this.x, this.y) < this.size) {
+  collisionWith(player, bandages, ui){ 
+      if (dist(player.x, player.y, this.x, this.y) < this.size && player.hp < (ui.maxHP-10)) {
         player.hp += 10;
         bandages.splice(bandages.indexOf(this), 1);
       }

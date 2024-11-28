@@ -49,7 +49,7 @@ export function makeLevel1(setScene) {
       this.camera.update();
 
       for (let bandage of this.bandages) {
-        bandage.collisionWith(this.player, this.bandages);
+        bandage.collisionWith(this.player, this.bandages, this.ui);
       }
 
       for (let zombie of this.zombies) {
