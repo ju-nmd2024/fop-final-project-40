@@ -4,9 +4,10 @@ import Gun from "./entities/gun.js";
 import Zombie from "./entities/zombie.js";
 import DamageParticle from "./entities/particleDamage.js";
 
-import UI from "./ui.js";
 import Bandage from "./entities/bandage.js";
 //import Ammo from "./entities/ammo.js";
+
+import UI from "./ui.js";
 
 export function makeLevel1(setScene) {
   const camera = new Camera(0, 0);
@@ -53,14 +54,11 @@ export function makeLevel1(setScene) {
       this.player.update();
       this.gun.update(this.bullets, this.player);
       this.camera.update();
-      collisionWith(this.player, this.bandages/*, this.ammoBoxes*/);
 
       for (let bandage of this.bandages) {
-        bandage.update(this.player);
+        bandage.collisionWith(this.player, this.bandages);
       }
-      /*for (let ammo of this.ammoBoxes) {
-        ammo.update(this.player);
-      }*/
+
       for (let zombie of this.zombies) {
         zombie.update(this.player);
       }
