@@ -5,7 +5,6 @@ import Zombie from "./entities/zombie.js";
 import DamageParticle from "./entities/particleDamage.js";
 
 import Bandage from "./entities/bandage.js";
-//import Ammo from "./entities/ammo.js";
 
 import UI from "./ui.js";
 
@@ -17,7 +16,6 @@ export function makeLevel1(setScene) {
   const zombies = [];
   const bullets = [];
   const bandages = [];
- // const ammoBoxes = [];
   return {
     camera: camera,
     player: player,
@@ -26,7 +24,6 @@ export function makeLevel1(setScene) {
     zombies: zombies,
     bullets: bullets,
     bandages: bandages,
-   // ammoBoxes: ammoBoxes,
     load() {
       this.gun.load();
       this.player.load();
@@ -41,12 +38,8 @@ export function makeLevel1(setScene) {
       }
       // creates bandages
       for (let i = 0; i < 1; i++) {
-        this.bandages.push(new Bandage());
+        this.bandages.push(new Bandage(20 + this.camera.x, 30 + this.camera.y));
       }
-      // creates ammoBoxes
-     /* for (let i = 0; i < 1; i++) {
-        this.ammoBoxes.push(new Ammo());
-      }*/
       ui.setup(this.player);
     },
 
@@ -125,11 +118,8 @@ export function makeLevel1(setScene) {
         zombie.draw(this.camera, this.player);
       }
       for (let bandage of this.bandages) {
-        bandage.draw(this.camera, this.player);
+        bandage.draw(this.camera);
       }
-      /*for (let ammo of this.ammoBoxes) {
-        ammo.draw(this.camera, this.player);
-      }*/
 
       this.ui.draw(this.player);
     },

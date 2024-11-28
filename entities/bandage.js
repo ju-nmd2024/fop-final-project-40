@@ -8,15 +8,15 @@ export default class Bandage extends Entity {
     this.size = 8;  
   }
   
-  draw(){
+  draw(camera){
     push();
     fill(255,0,0);
-    ellipse(this.x,this.y, this.size, this.size);
+    ellipse(this.x + camera.x, this.y + camera.y, this.size);
     pop();
   }    
 
   collisionWith(player, bandages){ 
-      if (dist(player.x, player.y, this.x, this.y < this.size)) {
+      if (dist(player.x, player.y, this.x, this.y) < this.size) {
         player.hp += 10;
         bandages.splice(bandages.indexOf(this), 1);
       }
