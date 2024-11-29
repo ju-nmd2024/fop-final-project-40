@@ -17,7 +17,7 @@ export default class Menu {
         if (keyIsDown(13)) {
             this.alpha -= 100;
         }
-        if (this.alpha <= 0) {
+        if (this.alpha <= 0) { 
             this.start = true;
         }
     }

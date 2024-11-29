@@ -25,7 +25,7 @@ export default class Map extends Entity {
         this.currentFrameData = this.setAnimFrame(animData);
     }
 
-
+ 
 
     
     lvl1() {

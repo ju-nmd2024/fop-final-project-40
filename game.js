@@ -37,9 +37,7 @@ function draw() {
       menu.update();
       if (menu.start) {
         setScene("level1");
-      }  /*else if (menu.start) {  ?? 
-        setScene("level2");
-      } */
+      }
       menu.draw();
       break;
     case "level1":
