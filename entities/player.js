@@ -110,7 +110,15 @@ export default class Player extends Entity {
       let distance = dist(this.x, this.y, zombie.x, zombie.y);
       if (distance < 16 && this.hp > 0) {
         this.hp -= 10;
-      }
+      } 
+    }
+  }
+  damageBy(zombieslvl2) {
+    for (let zombielvl2 of zombieslvl2) {
+      let distance = dist(this.x, this.y, zombielvl2.x, zombielvl2.y);
+      if (distance < 16 && this.hp > 0) {
+        this.hp -= 10;
+      } 
     }
   }
 
@@ -119,6 +127,18 @@ export default class Player extends Entity {
       let distance = dist(zombie.x, zombie.y, this.x, this.y);
       if (distance < 15) {
         let pushAngle = Math.atan2(zombie.y - this.y, zombie.x - this.x);
+
+        this.x -= Math.cos(pushAngle) * 1;
+        this.y -= Math.sin(pushAngle) * 1;
+      }
+    }
+  }
+
+  pushedBy(zombieslvl2) {
+    for (let zombielvl2 of zombieslvl2) {
+      let distance = dist(zombielvl2.x, zombielvl2.y, this.x, this.y);
+      if (distance < 15) {
+        let pushAngle = Math.atan2(zombielvl2.y - this.y, zombielvl2.x - this.x);
 
         this.x -= Math.cos(pushAngle) * 1;
         this.y -= Math.sin(pushAngle) * 1;

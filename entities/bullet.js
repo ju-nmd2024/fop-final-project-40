@@ -23,11 +23,25 @@ export default class Bullet {
         for (let zombie of zombies) {
             if (dist(zombie.x, zombie.y, this.x, this.y) < zombie.size/2) {
                 particles.push(new DamageParticle(camera, -2, zombie));
-                zombie.hp -= 2;
+                zombie.hp -= 2; 
                 bullets.splice(bullets.indexOf(this), 1);
             }
             if (zombie.hp <= 0) {
                 zombies.splice(zombies.indexOf(zombie), 1);
+            }
+            for (let particle of particles) {
+                particle.draw();
+            }
+        }
+
+        for (let zombielvl2 of zombieslvl2) {
+            if (dist(zombielvl2.x, zombielvl2.y, this.x, this.y) < zombielvl2.size/2) {
+                particles.push(new DamageParticle(camera, -2, zombielvl2));
+                zombielvl2.hp -= 2; 
+                bullets.splice(bullets.indexOf(this), 1);
+            }
+            if (zombielvl2.hp <= 0) {
+                zombieslvl2.splice(zombieslvl2.indexOf(zombielvl2), 1);
             }
             for (let particle of particles) {
                 particle.draw();
