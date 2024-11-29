@@ -79,7 +79,7 @@ export function makeLevel1(setScene) {
         this.player.damageBy(this.zombies);
       }
 
-     
+    
 
       
 
