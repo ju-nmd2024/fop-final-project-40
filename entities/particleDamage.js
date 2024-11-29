@@ -10,7 +10,7 @@ export default class DamageParticle {
     }
     setup() {
         for (let i = 0; i < 20; i++) {
-            let particle = generateParticle();
+            let particle = generateParticle(this.x, this.y);
             this.particles.push(particle);
         }
     }
@@ -39,8 +39,10 @@ export default class DamageParticle {
         }
     }
 }
-function generateParticle() {
+function generateParticle(x, y) {
     return {
+        x: x,
+        y: y,
         velocity: 0.6,
         angle: Math.random() * Math.PI*2,
     };
