@@ -7,6 +7,7 @@ import DamageParticle from "./entities/particleDamage.js";
 import Bandage from "./entities/bandage.js";
 import Ammo from "./entities/ammoBox.js";
 
+import Map from "./map.js";
 import UI from "./ui.js";
 
 export function makeLevel1(setScene) {
@@ -19,6 +20,7 @@ export function makeLevel1(setScene) {
   const bandages = [];
   const ammoBoxes = [];
 
+  const map = new Map();
   const ui = new UI();
   return {
     camera: camera,
@@ -30,12 +32,15 @@ export function makeLevel1(setScene) {
     bandages: bandages,
     ammoBoxes: ammoBoxes,
 
+    map: map,
     ui: ui,
     load() {
+      this.map.load();
       this.gun.load();
       this.player.load();
     },
     setup() {
+      this.map.setup();
       this.player.setup();
       this.gun.setup();
       this.camera.attachTo(this.player);
@@ -55,6 +60,7 @@ export function makeLevel1(setScene) {
     },
 
     update() {
+      //this.map.update();
       this.player.update();
       this.gun.update(this.bullets, this.player);
       this.camera.update();
@@ -123,11 +129,9 @@ export function makeLevel1(setScene) {
 
     draw() {
       clear();
-      background(0);
+      //background(0);
+      this.map.lvl1(this.camera);
       push();
-      fill(200);
-      rect(0 + this.camera.x, 0 + this.camera.y, 50, 50);
-      pop();
       for (let bandage of this.bandages) {
         bandage.draw(this.camera);
       }

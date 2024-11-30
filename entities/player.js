@@ -71,7 +71,7 @@ export default class Player extends Entity {
     const moveBy = (this.speed / 1000) * deltaTime;
     this.movePlayer(moveBy);
 
-    const animData = this.anims[this.currentAnim];
+    let animData = this.anims[this.currentAnim];
     this.currentFrameData = this.setAnimFrame(animData);
   }
 

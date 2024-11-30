@@ -1,16 +1,45 @@
 import Entity from "./entities/entity.js";
+import { getFramesPos, drawSprite } from "../utils.js";
 
 export default class Map extends Entity {
     constructor() {
+        super();
+        this.tileSize = 16,
+
         this.tileMap1 = null;
         this.tileMap2 = null;
         this.tileMap2 = null;
+
+        this.tiles1 = [
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1],
+            [1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
+            [1, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 5, 0, 0, 0, 0, 0],
+            [1, 1, 0, 0, 0, 2, 3, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 1],
+            [1, 1, 0, 0, 0, 9, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0],
+            [1, 1, 0, 0, 0, 9, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 5, 0, 0, 0, 1, 0],
+            [1, 1, 1, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 18, 18, 11, 1, 1, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0],
+            [1, 1, 1, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 19, 19, 17, 1, 0, 0, 0, 0, 0, 1, 5, 0, 0, 0, 0, 0],
+            [1, 1, 1, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0],
+            [1, 1, 1, 0, 0, 9, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 1],
+            [1, 1, 0, 0, 0, 9, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 5, 0, 0, 0, 0, 1],
+            [0, 0, 0, 0, 0, 9, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 5, 1, 0, 0, 1, 1],
+            [0, 0, 0, 0, 1, 9, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 1, 0, 0, 0, 1],
+            [0, 0, 0, 1, 1, 6, 7, 7, 7, 7, 7, 7, 7, 7, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1],
+            [0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1],
+            [0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1]
+        ];
     }
     load() {
-        this.tileMap1 = loadImage("./assets/player.png");
+        this.tileMap1 = loadImage("./assets/level1.png");
     }
     loadAnim() {
-        this.frames = getFramesPos(6, 4, this.width, this.height);
+        this.frames = getFramesPos(6, 4, this.tileSize, this.tileSize);
     
         // tiles
         this.anims = {
@@ -20,16 +49,28 @@ export default class Map extends Entity {
           "rooftop2": 18, "roof": 19 
         };
     }
+    setup() {
+        this.loadAnim();
+    }
     update() {
         const animData = this.anims[this.currentAnim];
         this.currentFrameData = this.setAnimFrame(animData);
     }
 
- 
-
     
-    lvl1() {
-        // draw map
+    lvl1(camera) {
+        imageMode(CORNER);
+        noStroke();
+        push();
+        translate(camera.x-220, camera.y-220);
+        for (let rowIndex = 0; rowIndex < this.tiles1.length; rowIndex++) {
+            
+            for (let colIndex = 0; colIndex < this.tiles1[rowIndex].length; colIndex++) {
+
+                this.tiles(this.tiles1[rowIndex][colIndex], colIndex * this.tileSize, rowIndex * this.tileSize);
+            }
+        }
+        pop();
     }
     lvl2() {
         // draw map
@@ -37,4 +78,19 @@ export default class Map extends Entity {
     lvl3() {
         // draw map
     }
+
+
+
+    tiles(tile, x, y) {
+        drawSprite(
+            this.tileMap1,
+            x,
+            y,
+            this.frames[tile].x,
+            this.frames[tile].y,
+            this.tileSize,
+            this.tileSize,
+        );
+    }
 }
+
