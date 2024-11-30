@@ -25,8 +25,6 @@ function healthBar(maxHP, player) {
     strokeWeight(1.8);
     text(player.hp, 61, 7.3);
     pop();
- 
-    
 }
 
 function ammoUI(gun){

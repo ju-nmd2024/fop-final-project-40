@@ -7,7 +7,6 @@ import DamageParticle from "./entities/particleDamage.js";
 import Bandage from "./entities/bandage.js";
 import Ammo from "./entities/ammoBox.js";
 
-
 import UI from "./ui.js";
 
 export function makeLevel1(setScene) {

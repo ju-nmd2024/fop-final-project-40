@@ -34,20 +34,6 @@ export default class Bullet {
             }
         }
 
-        /*for (let zombielvl2 of zombieslvl2) {
-            if (dist(zombielvl2.x, zombielvl2.y, this.x, this.y) < zombielvl2.size/2) {
-                particles.push(new DamageParticle(camera, -2, zombielvl2));
-                zombielvl2.hp -= 2; 
-                bullets.splice(bullets.indexOf(this), 1);
-            }
-            if (zombielvl2.hp <= 0) {
-                zombieslvl2.splice(zombieslvl2.indexOf(zombielvl2), 1);
-            }
-            for (let particle of particles) {
-                particle.draw();
-            }
-        }*/
-
         if (dist(this.x, this.y, player.x, player.y) > 200) { // so that bullets dont travel forever
             bullets.splice(bullets.indexOf(this), 1);
         }
