@@ -64,7 +64,7 @@ export default class Player extends Entity {
         let i = Math.floor((nextMove.x+220)/16);
         let j = Math.floor((nextMove.y+220)/16);
 
-        if (map.wall1.includes(map.tiles1[j][i])) {
+        if (map.tiles1[j][i] > 5) {
           collision = true;
           break;
         }
