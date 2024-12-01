@@ -1,49 +1,54 @@
 export default class DamageParticle {
-    constructor(camera, damageAmount, target) {
-        this.x = target.x + camera.x;
-        this.y = target.y + camera.y;
+    constructor(damageAmount, target, camera) {
         this.damageAmount = damageAmount;
         this.target = target;
-        this.particles = [];
+        this.x = camera.x;
+        this.y = camera.y;
 
-        this.setup();
+        this.particles = [];
     }
-    setup() {
-        for (let i = 0; i < 20; i++) {
-            let particle = generateParticle(this.x, this.y);
+
+    generateParticle(x, y) {
+        // You could add the lifespan of a particle here
+        return {
+            x: x,
+            y: y,
+            size: 60,
+            velocity: Math.random(),
+            angle: Math.random() * Math.PI * 2,
+        };
+    }
+
+    createParticles(x, y) {
+        for (let i = 0; i < 10; i++) {
+            let particle = this.generateParticle(x, y);
             this.particles.push(particle);
         }
     }
+
+    updateParticle(particle) {
+        particle.x += Math.cos(particle.angle) * particle.velocity; //+ this.x;
+        particle.y += Math.sin(particle.angle) * particle.velocity; //+ this.y;
+        particle.size *= 0.79;
+        particle.velocity *= 0.79;
+        // Update the lifespan of a particle here
+    }
+
     drawParticle(particle) {
         push();
-        rectMode(CENTER);
         noStroke();
-        fill(255, 0, 0);
-        rect(this.x, this.y, 200, 200);
+        fill(255, 0, 0, 100);
+        rect(particle.x, particle.y, particle.size, particle.size);
         pop();
-        console.log("particle " + this.x);
     }
-    update(particle) {
-        particle.x += Math.cos(particle.angle) * particle.velocity;
-        particle.y += Math.sin(particle.angle) * particle.velocity;
-        this.velocity *= 0.99;
-        for (let i = 0; i < 10; i++) {
-            this.target.tint = '#ff6464';
-            console.log(this.target.x);
-        }
-    }
+
     draw() {
         for (let particle of this.particles) {
-            this.update(particle);
+            this.updateParticle(particle);
             this.drawParticle(particle);
+            // And remove a particle here, once its lifespan is over
         }
     }
 }
-function generateParticle(x, y) {
-    return {
-        x: x,
-        y: y,
-        velocity: 0.6,
-        angle: Math.random() * Math.PI * 2,
-    };
-}
+
+// cred 2 u garrit ^ :)

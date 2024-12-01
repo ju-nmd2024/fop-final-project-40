@@ -101,7 +101,7 @@ export function makeLevel1(setScene) {
                 bullet.update(this.zombies, this.bullets, this.player, this.camera);
             }
 
-            if (frameCount % 12 === 0) {
+            if (frameCount % 48 === 0) {
                 this.player.damageBy(this.zombies);
             }
 
