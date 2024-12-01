@@ -56,7 +56,7 @@ export function makeLevel1(setScene) {
         }
       }
       // creates bandages
-      for (let l = 0; l < 1;) { // ensures they only spawn on walkable tiles
+      for (let l = 0; l < 2;) { // ensures they only spawn on walkable tiles
         let x = Math.floor((Math.random()*550)/16);
         let y = Math.floor((Math.random()*350)/16);
         if (this.map.tiles1[y][x] < 5) {
@@ -105,9 +105,6 @@ export function makeLevel1(setScene) {
         this.player.damageBy(this.zombies);
       }
 
-    
-
-      
 
       // zombie movement
       for (let i = 0; i < this.zombies.length; i++) {
@@ -119,12 +116,33 @@ export function makeLevel1(setScene) {
 
         // move zombie in that direction unless already next to player
         if (
-          dist(this.player.x, this.player.y, zombie.x, zombie.y) <
-          zombie.size + 1
-        ) {
+          dist(this.player.x, this.player.y, zombie.x, zombie.y) < zombie.size + 1) {
         } else {
-          zombie.x += cos(angle) * zombie.speed;
-          zombie.y += sin(angle) * zombie.speed;
+
+            let moveX = cos(angle) * zombie.speed
+            let moveY = sin(angle) * zombie.speed;
+
+          for (let vec of zombie.points) {
+            let nextMove = {
+              x: zombie.x + moveX + vec.x,
+              y: zombie.y + moveY + vec.y,
+            };
+
+            let x = Math.floor((zombie.x+220)/16);
+            let y = Math.floor((zombie.y+220)/16);
+            let a = Math.floor((nextMove.x+220)/16);
+            let b = Math.floor((nextMove.y+220)/16);
+
+            if (this.map.tiles1[b][x] > 5) {
+                moveY = 0;
+            }
+
+            if (this.map.tiles1[y][a] > 5) {
+                moveX = 0; 
+            }
+          }
+          zombie.x += moveX;
+          zombie.y += moveY;
         }
 
         // to make sure the zombies do not stack up if player moves
@@ -136,8 +154,8 @@ export function makeLevel1(setScene) {
 
             if (distance < zombie.size) {
               let repelAngle = atan2(zombie.y - other.y, zombie.x - other.x);
-              zombie.x += cos(repelAngle) * 0.5; // the amount of repelling (x)
-              zombie.y += sin(repelAngle) * 0.5; // the amount of repelling (y)
+              zombie.x += cos(repelAngle) * 2; // the amount of repelling (x)
+              zombie.y += sin(repelAngle) * 2; // the amount of repelling (y)
             }
           }
         }

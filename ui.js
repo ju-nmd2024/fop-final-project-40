@@ -34,11 +34,11 @@ function ammoUI(gun){
     fill(255, 220, 0);
     // magazine
     textSize(5);
-    text("|  " + (gun.magCount*gun.maxAmmo), 176, 100);
+    text("|  " + (gun.magCount*gun.maxAmmo), 174, 97);
     // ammo
     textSize(10);
     textAlign(RIGHT, BASELINE);
-    text(gun.ammoCount, 174, 100);
+    text(gun.ammoCount, 172, 100);
 
     pop();
 }
