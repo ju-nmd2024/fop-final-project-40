@@ -38,7 +38,7 @@ function ammoUI(gun){
     text(gun.ammoCount, 184, 100);
     // magazine
     textSize(5);
-    text(gun.magCount + " /", 172, 100);
+    text((gun.magCount*gun.maxAmmo )+ " |", 171.5, 100);
 
     pop();
 }

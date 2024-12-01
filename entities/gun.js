@@ -19,7 +19,7 @@ export default class Gun extends Entity {
     this.spriteRSmooth = 0;
 
     this.magCount = 2;
-    this.ammoCount = 24;
+    this.ammoCount = 20;
     this.maxAmmo = null;
     this.maxMag = 4;
     this.reloading = false;
