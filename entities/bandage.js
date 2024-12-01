@@ -56,8 +56,10 @@ export default class Bandage extends Entity {
   }    
 
   collisionWith(player, bandages, ui){ 
-      if (dist(player.x, player.y, this.x, this.y) < this.width && player.hp < (ui.maxHP-10)) {
-        player.hp += 10;
+      if (dist(player.x, player.y, this.x, this.y) < this.width && player.hp < (ui.maxHP-1)) {
+        for (let i = 0; i < 20 && player.hp !== ui.maxHP; i++ ) {
+          player.hp += 1;
+        }
         bandages.splice(bandages.indexOf(this), 1);
       }
     }

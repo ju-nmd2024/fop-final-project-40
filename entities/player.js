@@ -134,7 +134,9 @@ export default class Player extends Entity {
     for (let zombie of zombies) {
       let distance = dist(this.x, this.y, zombie.x, zombie.y);
       if (distance < 16 && this.hp > 0) {
-        this.hp -= 10;
+        this.hp -= 9;
+      } if (this.hp < 0) {
+        this.hp = 0;
       } 
     }
   }
