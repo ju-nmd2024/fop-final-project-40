@@ -6,7 +6,7 @@ export default class Map extends Entity {
         super();
         this.tileSize = 16,
 
-        this.tileMap1 = null;
+            this.tileMap1 = null;
         this.tileMap2 = null;
         this.tileMap2 = null;
 
@@ -40,28 +40,28 @@ export default class Map extends Entity {
     }
     loadAnim() {
         this.frames = getFramesPos(6, 5, this.tileSize, this.tileSize);
-    
+
         // tiles
         this.anims = {
-          "grass": 0,
-          "noClipGrass": 6, "tree": 7, "fencetop1": 8, "fencetop2": 9, "fencetop3": 10, "fenceright": 11,
-          "fencebot1": 12, "fencebot2": 13, "fencebot3": 14, "fenceleft": 15, "rooftop1": 16, "rooftop3": 17,
-          "houseleft": 18, "door": 19, "wall": 20, "houseright": 21, "roofleft": 22, "roofright": 23,
-          "rooftop2": 24, "roof": 25 
+            "grass": 0,
+            "noClipGrass": 6, "tree": 7, "fencetop1": 8, "fencetop2": 9, "fencetop3": 10, "fenceright": 11,
+            "fencebot1": 12, "fencebot2": 13, "fencebot3": 14, "fenceleft": 15, "rooftop1": 16, "rooftop3": 17,
+            "houseleft": 18, "door": 19, "wall": 20, "houseright": 21, "roofleft": 22, "roofright": 23,
+            "rooftop2": 24, "roof": 25
         };
     }
     setup() {
         this.loadAnim();
     }
 
-    
+
     lvl1(camera) {
         imageMode(CORNER);
         noStroke();
         push();
-        translate(Math.floor(camera.x-220), Math.floor(camera.y-220));
+        translate(Math.floor(camera.x - 220), Math.floor(camera.y - 220));
         for (let rowIndex = 0; rowIndex < this.tiles1.length; rowIndex++) {
-            
+
             for (let colIndex = 0; colIndex < this.tiles1[rowIndex].length; colIndex++) {
 
                 this.tiles(this.tiles1[rowIndex][colIndex], colIndex * this.tileSize, rowIndex * this.tileSize);

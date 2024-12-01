@@ -5,7 +5,7 @@ export function getFramesPos(numOfCols, numOfRows, tileWidth, tileHeight) {
     let currentTileY = 0;
     for (let y = 0; y < numOfRows; y++) {
         for (let x = 0; x < numOfCols; x++) {
-            framesPos.push({x: currentTileX, y: currentTileY});
+            framesPos.push({ x: currentTileX, y: currentTileY });
             currentTileX += tileWidth;
         }
         currentTileY += tileHeight;
@@ -25,14 +25,14 @@ export function drawSprite(
     height
 ) {
     image(
-    src,
-    destinationX,
-    destinationY,
-    width,
-    height,
-    srcX,
-    srcY,
-    width,
-    height
+        src,
+        destinationX,
+        destinationY,
+        width,
+        height,
+        srcX,
+        srcY,
+        width,
+        height
     );
 }

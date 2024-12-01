@@ -54,9 +54,9 @@ export default class Zombie extends Entity {
 
   setup() {
     this.points = [
-      createVector( (this.width) / 2,  (this.height) / 2),
-      createVector( (this.width) / 2, -(this.height) / 2),
-      createVector(-(this.width) / 2,  (this.height) / 2),
+      createVector((this.width) / 2, (this.height) / 2),
+      createVector((this.width) / 2, -(this.height) / 2),
+      createVector(-(this.width) / 2, (this.height) / 2),
       createVector(-(this.width) / 2, -(this.height) / 2)
     ];
 

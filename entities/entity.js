@@ -7,7 +7,6 @@ export default class Entity {
         this.currentFrame = 0, // which frame of the animation we're on
         this.currentFrameData = null; // where in the sprite sheet the frame is at
         this.animationTimer = 0; // to know when to switch frame
-        //this.previousTime = 0;
         this.frames = [];
     }
     setAnim(name) {
@@ -15,13 +14,12 @@ export default class Entity {
             this.currentAnim = name; // set animation
             this.currentFrame = 0; // start at first frame
             this.animationTimer = 0; // reset timer
-            //this.previousTime = 0; // reset timer
         }
     }
 
     setAnimFrame(animData) {
         // if the animation only contains a single frame then just view that one frame
-        if (typeof animData === "number") { 
+        if (typeof animData === "number") {
             this.currentFrame = animData;
             return this.frames[this.currentFrame];
         }

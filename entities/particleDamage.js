@@ -21,7 +21,7 @@ export default class DamageParticle {
         fill(255, 0, 0);
         rect(this.x, this.y, 200, 200);
         pop();
-        console.log("particle "+this.x);
+        console.log("particle " + this.x);
     }
     update(particle) {
         particle.x += Math.cos(particle.angle) * particle.velocity;
@@ -29,7 +29,7 @@ export default class DamageParticle {
         this.velocity *= 0.99;
         for (let i = 0; i < 10; i++) {
             this.target.tint = '#ff6464';
-        console.log(this.target.x);
+            console.log(this.target.x);
         }
     }
     draw() {
@@ -44,6 +44,6 @@ function generateParticle(x, y) {
         x: x,
         y: y,
         velocity: 0.6,
-        angle: Math.random() * Math.PI*2,
+        angle: Math.random() * Math.PI * 2,
     };
 }
