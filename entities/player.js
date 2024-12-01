@@ -69,7 +69,6 @@ export default class Player extends Entity {
           break;
         }
       }
-      console.log(this.x);
       if (!collision) {
         this.x += move.x;
         this.y += move.y;
