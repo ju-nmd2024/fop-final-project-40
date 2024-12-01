@@ -8,6 +8,9 @@ export default class Player extends Entity {
     this.speed = 100; // player speed
     this.x = x;
     this.y = y;
+
+    this.points = [];
+
     this.width = 16;
     this.height = 16;
     this.viewportX = x;
@@ -33,43 +36,66 @@ export default class Player extends Entity {
     };
   }
 
-  movePlayer(moveBy) {
+  movePlayer(moveBy, map) {
     let move = {
       x: 0,
       y: 0,
     };
     if (keyIsDown(68) || keyIsDown(39)) {
       move.x += moveBy;
-    }
-    if (keyIsDown(65) || keyIsDown(37)) {
+    } if (keyIsDown(65) || keyIsDown(37)) {
       move.x -= moveBy;
-    }
-    if (keyIsDown(87) || keyIsDown(38)) {
+    } if (keyIsDown(87) || keyIsDown(38)) {
       move.y -= moveBy;
-    }
-    if (keyIsDown(83) || keyIsDown(40)) {
+    } if (keyIsDown(83) || keyIsDown(40)) {
       move.y += moveBy;
-    }
-    if (move.x === 0 && move.y === 0) {
+    } if (move.x === 0 && move.y === 0) {
       this.setAnim("idle");
     } else {
       this.setAnim("run");
-      this.x += move.x;
-      this.y += move.y;
+
+      let collision = false;
+      for (let vec of this.points) {
+        let nextMove = {
+          x: this.x + move.x + vec.x,
+          y: this.y + move.y + vec.y,
+        };
+  
+        let i = Math.floor((nextMove.x+220)/16);
+        let j = Math.floor((nextMove.y+220)/16);
+
+        if (map.wall1.includes(map.tiles1[j][i])) {
+          collision = true;
+          break;
+        }
+      }
+      console.log(this.x);
+      if (!collision) {
+        this.x += move.x;
+        this.y += move.y;
+      }
     }
   }
+  
 
   setup() {
+    this.points = [
+      createVector( (this.width-6) / 2,  (this.height-6) / 2),
+      createVector( (this.width-6) / 2, -(this.height-6) / 2),
+      createVector(-(this.width-6) / 2,  (this.height-6) / 2),
+      createVector(-(this.width-6) / 2, -(this.height-6) / 2)
+    ];
+
     this.loadAnim();
     this.setAnim("idle");
   }
 
-  update() {
+  update(map) {
     //prev timer
     this.animationTimer += deltaTime; // make timer
 
     const moveBy = (this.speed / 1000) * deltaTime;
-    this.movePlayer(moveBy);
+    this.movePlayer(moveBy, map);
 
     let animData = this.anims[this.currentAnim];
     this.currentFrameData = this.setAnimFrame(animData);

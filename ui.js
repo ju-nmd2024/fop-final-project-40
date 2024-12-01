@@ -29,16 +29,16 @@ function healthBar(maxHP, player) {
 
 function ammoUI(gun){
     push();
-    textAlign(RIGHT, BASELINE);
     stroke(55, 20, 0);
     strokeWeight(2);
     fill(255, 220, 0);
-    // ammo
-    textSize(10);
-    text(gun.ammoCount, 184, 100);
     // magazine
     textSize(5);
-    text((gun.magCount*gun.maxAmmo )+ " |", 171.5, 100);
+    text("|  " + (gun.magCount*gun.maxAmmo), 176, 100);
+    // ammo
+    textSize(10);
+    textAlign(RIGHT, BASELINE);
+    text(gun.ammoCount, 174, 100);
 
     pop();
 }

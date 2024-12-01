@@ -60,8 +60,7 @@ export function makeLevel1(setScene) {
     },
 
     update() {
-      //this.map.update();
-      this.player.update();
+      this.player.update(this.map);
       this.gun.update(this.bullets, this.player);
       this.camera.update();
 
@@ -128,8 +127,6 @@ export function makeLevel1(setScene) {
     },
 
     draw() {
-      clear();
-      //background(0);
       this.map.lvl1(this.camera);
       push();
       for (let bandage of this.bandages) {

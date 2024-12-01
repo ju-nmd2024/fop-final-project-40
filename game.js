@@ -6,7 +6,7 @@ import winScreen from "./winScreen.js";
 
 
 const scenes = ["menu", "level1", "losescreen", "winscreen"];
-let currentScene = "level1";
+let currentScene = "menu";
 function setScene(name) {
   if (scenes.includes(name)) {
     currentScene = name;
