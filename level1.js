@@ -49,7 +49,9 @@ export function makeLevel1(setScene) {
         let x = Math.floor((Math.random()*550)/16);
         let y = Math.floor((Math.random()*350)/16);
         if (this.map.tiles1[y][x] < 5) {
-          this.zombies.push(new Zombie((x*16)-220, (y*16)-220));
+          x = Math.floor((x*16-220)+4);
+          y = Math.floor((y*16-220)+4);
+          this.zombies.push(new Zombie(x, y));
           l++;
         }
       }
@@ -58,7 +60,9 @@ export function makeLevel1(setScene) {
         let x = Math.floor((Math.random()*550)/16);
         let y = Math.floor((Math.random()*350)/16);
         if (this.map.tiles1[y][x] < 5) {
-          this.bandages.push(new Bandage((x*16)-220, (y*16)-220));
+          x = Math.floor((x*16-220)+4);
+          y = Math.floor((y*16-220)+4);
+          this.bandages.push(new Bandage(x, y));
           l++;
         }
       }
@@ -67,7 +71,9 @@ export function makeLevel1(setScene) {
         let x = Math.floor((Math.random()*550)/16);
         let y = Math.floor((Math.random()*350)/16);
         if (this.map.tiles1[y][x] < 5) {
-          this.ammoBoxes.push(new Ammo((x*16)-220, (y*16)-220));
+          x = Math.floor((x*16-220)+4);
+          y = Math.floor((y*16-220)+4);
+          this.ammoBoxes.push(new Ammo(x, y));
           l++;
         }
       }
