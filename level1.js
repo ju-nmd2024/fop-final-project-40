@@ -111,7 +111,7 @@ export function makeLevel1(setScene) {
             for (let zombie of this.zombies) {
                 for (let bullet of this.bullets) {
                     if (dist(zombie.x, zombie.y, bullet.x, bullet.y) < zombie.size / 2) {
-                        createParticles(-2, zombie.x, zombie.y, this.camera)
+                        createParticles(-2, zombie.x, zombie.y, this.camera, zombie);
                         zombie.hp -= 2;
                         this.bullets.splice(this.bullets.indexOf(bullet), 1);
                     }
@@ -203,7 +203,8 @@ export function makeLevel1(setScene) {
 
                 if (particle.isDead()) {
                     let particleIndex = particles.indexOf(particle);
-                    particles.splice(particleIndex, 1);
+                    particle.target.tint = 255;
+                    //particles.splice(particleIndex, 1);
                 }
             }
 
@@ -212,9 +213,9 @@ export function makeLevel1(setScene) {
     };
 }
 
-function createParticles(damageAmount, x, y, camera) {
+function createParticles(damageAmount, x, y, camera, target) {
     for (let i = 0; i < 10; i++) {
-        let particleZ = new DamageParticle(damageAmount, x, y, camera);
+        let particleZ = new DamageParticle(damageAmount, x, y, camera, target);
         particles.push(particleZ);
     }
 }
