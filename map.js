@@ -6,7 +6,7 @@ export default class Map extends Entity {
         super();
         this.tileSize = 16,
 
-            this.tileMap1 = null;
+        this.tileMap1 = null;
         this.tileMap2 = null;
         this.tileMap2 = null;
 
@@ -90,4 +90,3 @@ export default class Map extends Entity {
         );
     }
 }
-

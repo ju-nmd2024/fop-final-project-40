@@ -1,53 +1,37 @@
 export default class DamageParticle {
-    constructor(damageAmount, target, camera) {
+    constructor(damageAmount, x, y, camera) {
         this.damageAmount = damageAmount;
-        this.target = target;
-        this.x = camera.x;
-        this.y = camera.y;
+        this.target = null;
+        this.x = x;
+        this.y = y;
 
-        this.particles = [];
+        this.camera = camera;
+
+        this.size = 6;
+        this.velocity = Math.random();
+        this.angle = Math.random() * Math.PI * 2;
+
+        this.frames = 0;
+        this.maxFrames = 200;
     }
-
-    generateParticle(x, y) {
-        // You could add the lifespan of a particle here
-        return {
-            x: x,
-            y: y,
-            size: 60,
-            velocity: Math.random(),
-            angle: Math.random() * Math.PI * 2,
-        };
+    update() {
+        this.x += Math.cos(this.angle) * this.velocity;
+        this.y += Math.sin(this.angle) * this.velocity;
+        this.size *= 0.79;
+        this.velocity *= 0.69;
+        this.frames++;
     }
-
-    createParticles(x, y) {
-        for (let i = 0; i < 10; i++) {
-            let particle = this.generateParticle(x, y);
-            this.particles.push(particle);
-        }
-    }
-
-    updateParticle(particle) {
-        particle.x += Math.cos(particle.angle) * particle.velocity; //+ this.x;
-        particle.y += Math.sin(particle.angle) * particle.velocity; //+ this.y;
-        particle.size *= 0.79;
-        particle.velocity *= 0.79;
-        // Update the lifespan of a particle here
-    }
-
-    drawParticle(particle) {
+    draw() {
         push();
+        translate(this.camera.x, this.camera.y);
         noStroke();
         fill(255, 0, 0, 100);
-        rect(particle.x, particle.y, particle.size, particle.size);
+        rect(this.x, this.y, this.size, this.size);
         pop();
     }
 
-    draw() {
-        for (let particle of this.particles) {
-            this.updateParticle(particle);
-            this.drawParticle(particle);
-            // And remove a particle here, once its lifespan is over
-        }
+    isDead() {
+        return this.frames >= this.maxFrames;
     }
 }
 

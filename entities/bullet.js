@@ -17,19 +17,6 @@ export default class Bullet {
         this.x += Math.cos(this.angle) * this.speed;
         this.y += Math.sin(this.angle) * this.speed;
 
-        for (let zombie of zombies) {
-            if (dist(zombie.x, zombie.y, this.x, this.y) < zombie.size / 2) {
-                const particle = new DamageParticle(-2, zombie, camera);
-                particle.createParticles(0, 0);
-                particle.draw();
-                zombie.hp -= 2;
-                bullets.splice(bullets.indexOf(this), 1);
-            }
-            if (zombie.hp <= 0) {
-                zombies.splice(zombies.indexOf(zombie), 1);
-            }
-        }
-
         if (dist(this.x, this.y, player.x, player.y) > 200) { // so that bullets dont travel forever
             bullets.splice(bullets.indexOf(this), 1);
         }

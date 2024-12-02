@@ -10,6 +10,8 @@ import Ammo from "./entities/ammoBox.js";
 import Map from "./map.js";
 import UI from "./ui.js";
 
+let particles = [];
+
 export function makeLevel1(setScene) {
     const camera = new Camera(0, 0);
     const player = new Player(0, 0);
@@ -101,10 +103,23 @@ export function makeLevel1(setScene) {
                 bullet.update(this.zombies, this.bullets, this.player, this.camera);
             }
 
-            if (frameCount % 48 === 0) {
+            if (frameCount % 32 === 0) {
                 this.player.damageBy(this.zombies);
             }
 
+            // zombie death
+            for (let zombie of this.zombies) {
+                for (let bullet of this.bullets) {
+                    if (dist(zombie.x, zombie.y, bullet.x, bullet.y) < zombie.size / 2) {
+                        createParticles(-2, zombie.x, zombie.y, this.camera)
+                        zombie.hp -= 2;
+                        this.bullets.splice(this.bullets.indexOf(bullet), 1);
+                    }
+                    if (zombie.hp <= 0) {
+                        this.zombies.splice(this.zombies.indexOf(zombie), 1);
+                    }
+                }
+            }
 
             // zombie movement
             for (let i = 0; i < this.zombies.length; i++) {
@@ -182,8 +197,24 @@ export function makeLevel1(setScene) {
             for (let zombie of this.zombies) {
                 zombie.draw(this.camera, this.player);
             }
+            for (let particle of particles) {
+                particle.update();
+                particle.draw();
+
+                if (particle.isDead()) {
+                    let particleIndex = particles.indexOf(particle);
+                    particles.splice(particleIndex, 1);
+                }
+            }
 
             this.ui.draw(this.player, this.gun);
         },
     };
+}
+
+function createParticles(damageAmount, x, y, camera) {
+    for (let i = 0; i < 10; i++) {
+        let particleZ = new DamageParticle(damageAmount, x, y, camera);
+        particles.push(particleZ);
+    }
 }
