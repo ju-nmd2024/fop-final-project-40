@@ -56,9 +56,9 @@ export default class Map extends Entity {
 
 
     lvl1(camera) {
+        push();
         imageMode(CORNER);
         noStroke();
-        push();
         translate(Math.floor(camera.x - 220), Math.floor(camera.y - 220));
         for (let rowIndex = 0; rowIndex < this.tiles1.length; rowIndex++) {
 

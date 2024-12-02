@@ -24,6 +24,7 @@ export default class Gun extends Entity {
         this.maxMag = 8;
         this.reloading = false;
 
+        this.buttonPress = false;
         this.prevPress = false; // nånting skott sjuktit tryuckt kanpp
     }
     load() {
@@ -83,7 +84,7 @@ export default class Gun extends Entity {
         this.animationTimer += deltaTime; // make timer
 
         // reload
-        if (this.ammoCount === 0 && this.magCount !== 0) {
+        if (this.ammoCount === 0 && this.magCount !== 0 || keyIsDown(82) && !this.buttonPress && this.magCount > 0 && this.ammoCount !== this.maxAmmo) {
             this.setAnim("reload");
             this.reloading = true;
             this.ammoCount = this.maxAmmo;
@@ -92,6 +93,7 @@ export default class Gun extends Entity {
         if (this.currentAnim !== "reload") {
             this.reloading = false;
         }
+        this.buttonPress = keyIsDown(82);
 
         // shoot
         if (mouseIsPressed && !this.prevPress && !this.reloading && this.currentAnim != "shoot") { // click function
