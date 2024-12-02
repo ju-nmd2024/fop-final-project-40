@@ -57,7 +57,7 @@ export default class Player extends Entity {
         }
         if (move.x === 0 && move.y === 0) {
             this.setAnim("idle");
-        } else {
+        } else if (this.hp !== 0) {
             this.setAnim("run");
 
             for (let vec of this.points) {

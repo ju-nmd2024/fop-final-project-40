@@ -1,3 +1,5 @@
+import LoseScreen from "./loseScreen.js";
+
 import Camera from "./entities/camera.js";
 import Player from "./entities/player.js";
 import Gun from "./entities/gun.js";
@@ -13,6 +15,7 @@ import UI from "./ui.js";
 let particles = [];
 
 export function makeLevel1(setScene) {
+    const loseScreen = new LoseScreen();
     const camera = new Camera(0, 0);
     const player = new Player(0, 0);
     const gun = new Gun(0, 0);
@@ -25,6 +28,7 @@ export function makeLevel1(setScene) {
     const map = new Map();
     const ui = new UI();
     return {
+        loseScreen: loseScreen,
         camera: camera,
         player: player,
         gun: gun,
@@ -40,6 +44,7 @@ export function makeLevel1(setScene) {
             this.map.load();
             this.gun.load();
             this.player.load();
+            this.loseScreen.load();
         },
         setup() {
             this.map.setup();
@@ -86,6 +91,7 @@ export function makeLevel1(setScene) {
             this.player.update(this.map, this.gun);
             this.gun.update(this.bullets, this.player);
             this.camera.update();
+            this.loseScreen.update();
 
             for (let bandage of this.bandages) {
                 bandage.update();
@@ -209,6 +215,10 @@ export function makeLevel1(setScene) {
             }
 
             this.ui.draw(this.player, this.gun);
+
+            if (this.player.hp === 0) {
+                this.loseScreen.draw();
+            }
         },
     };
 }
@@ -219,3 +229,4 @@ function createParticles(damageAmount, x, y, camera, target) {
         particles.push(particleZ);
     }
 }
+

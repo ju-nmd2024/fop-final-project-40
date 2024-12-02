@@ -3,7 +3,7 @@ export default class Menu {
         this.menuBackgroundImg = null;
         this.menuLogoImg = null;
         this.menuStartImg = null;
-        this.alpha = 255;
+        this.alpha = 255; 
         this.start = false;
     }
 
@@ -13,7 +13,7 @@ export default class Menu {
         this.menuStartImg = loadImage("./assets/startbutton.png");
     }
 
-    update(setScene) {
+    update() {
         if (keyIsDown(13)) {
             this.alpha -= 100;
         }
@@ -23,11 +23,14 @@ export default class Menu {
     }
 
     draw() {
+        push();
         clear();
+        imageMode(CORNER);
         image(this.menuBackgroundImg, 0, 0);
         image(this.menuLogoImg, 0, 0);
         tint(255, this.alpha);
         image(this.menuStartImg, 0, 0);
         noTint();
+        pop();
     }
 }

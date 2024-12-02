@@ -98,7 +98,7 @@ export default class Gun extends Entity {
         this.buttonPress = keyIsDown(82);
 
         // shoot
-        if (mouseIsPressed && !this.prevPress && !this.reloading && this.currentAnim != "shoot") { // click function
+        if (mouseIsPressed && !this.prevPress && !this.reloading && this.currentAnim != "shoot" && player.hp !== 0) { // click function
             if (this.ammoCount > 0) { // only shoot if has ammo
                 this.setAnim("shoot");
                 bullets.push(new Bullet(player.x, player.y, (this.spriteR) - radians(90)));
