@@ -187,7 +187,7 @@ export function makeLevel1(setScene) {
         },
 
         draw() {
-            this.map.lvl1(this.camera);
+            this.map.draw(this.map.tiles1, this.camera);
             push();
             for (let bandage of this.bandages) {
                 bandage.draw(this.camera);
