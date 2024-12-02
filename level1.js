@@ -100,7 +100,7 @@ export function makeLevel1(setScene) {
                 zombie.update(this.player);
             }
             for (let bullet of this.bullets) {
-                bullet.update(this.zombies, this.bullets, this.player, this.camera);
+                bullet.update(this.zombies, this.bullets, this.player, this.camera, this.map);
             }
 
             if (frameCount % 24 === 0) {
@@ -134,7 +134,7 @@ export function makeLevel1(setScene) {
                     dist(this.player.x, this.player.y, zombie.x, zombie.y) < zombie.size + 1) {
                 } else {
 
-                    let moveX = cos(angle) * zombie.speed
+                    let moveX = cos(angle) * zombie.speed;
                     let moveY = sin(angle) * zombie.speed;
 
                     for (let vec of zombie.points) {

@@ -13,11 +13,18 @@ export default class Bullet {
     load() {
         this.spriteRef = loadImage('./assets/bullet.png');
     }
-    update(zombies, bullets, player, camera) {
+    update(zombies, bullets, player, camera, map) {
         this.x += Math.cos(this.angle) * this.speed;
         this.y += Math.sin(this.angle) * this.speed;
 
         if (dist(this.x, this.y, player.x, player.y) > 200) { // so that bullets dont travel forever
+            bullets.splice(bullets.indexOf(this), 1);
+        } 
+        
+        let x = Math.floor((this.x + 220) / 16);
+        let y = Math.floor((this.y + 220) / 16);
+
+        if (map.tiles1[y][x] > 5) {
             bullets.splice(bullets.indexOf(this), 1);
         }
     }

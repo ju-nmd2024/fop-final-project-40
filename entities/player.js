@@ -75,7 +75,7 @@ export default class Player extends Entity {
                     move.y = 0;
                 } if (map.tiles1[y][i] > 5) {
                     move.x = 0;
-                }
+                } 
             }
             this.x += move.x;
             this.y += move.y;
