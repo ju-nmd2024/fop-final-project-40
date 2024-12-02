@@ -132,14 +132,6 @@ export default class Map extends Entity {
         }
         pop();
     }
-    lvl2() {
-        // draw map
-    }
-    lvl3() {
-        // draw map
-    }
-
-
 
     tiles(tile, x, y) {
         drawSprite(
