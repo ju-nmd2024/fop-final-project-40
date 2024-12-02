@@ -24,6 +24,8 @@ export default class Gun extends Entity {
         this.maxMag = 8;
         this.reloading = false;
 
+        this.tint = 255;
+
         this.buttonPress = false;
         this.prevPress = false; // nånting skott sjuktit tryuckt kanpp
     }
@@ -115,6 +117,9 @@ export default class Gun extends Entity {
     draw(camera) {
         imageMode(CENTER);
         push();
+        
+        tint(this.tint);
+
         translate(192 / 2, 108 / 2);
 
         // rotation code inspired by https://discourse.processing.org/t/rotation-based-on-mouse/1766

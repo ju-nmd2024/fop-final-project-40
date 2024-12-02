@@ -20,6 +20,8 @@ export default class Player extends Entity {
         this.spriteR = 0;
         this.spriteRSmooth = 0;
 
+        this.damaged = false;
+        this.tint = 255;
         this.hp = 100;
     }
     load() {
@@ -92,7 +94,7 @@ export default class Player extends Entity {
         this.setAnim("idle");
     }
 
-    update(map) {
+    update(map, gun) {
         //prev timer
         this.animationTimer += deltaTime; // make timer
 
@@ -101,11 +103,15 @@ export default class Player extends Entity {
 
         let animData = this.anims[this.currentAnim];
         this.currentFrameData = this.setAnimFrame(animData);
+
+        this.damageFlash(gun);
     }
 
     draw(camera) {
         imageMode(CENTER);
         push();
+
+        tint(this.tint);
         translate(192 / 2, 108 / 2);
 
         // rotation code inspired by https://discourse.processing.org/t/rotation-based-on-mouse/1766
@@ -138,11 +144,26 @@ export default class Player extends Entity {
             let distance = dist(this.x, this.y, zombie.x, zombie.y);
             if (distance < 16 && this.hp > 0) {
                 this.hp -= 9;
+                this.damaged = true;
             }
             if (this.hp < 0) {
                 this.hp = 0;
             }
         }
+    }
+    damageFlash(gun) {
+        if (this.damaged) {
+            this.tint = '#ff6464';
+            gun.tint = '#ff6464';
+        } else {
+            this.tint = 255;
+            gun.tint = 255;
+        } if (frameCount % 12 === 0) {
+            for (let i = 0; i < 1; i++) {
+                this.damaged = false;
+            }
+        }
+
     }
 
     pushedBy(zombies) {

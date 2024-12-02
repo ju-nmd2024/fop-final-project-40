@@ -83,7 +83,7 @@ export function makeLevel1(setScene) {
         },
 
         update() {
-            this.player.update(this.map);
+            this.player.update(this.map, this.gun);
             this.gun.update(this.bullets, this.player);
             this.camera.update();
 
@@ -103,7 +103,7 @@ export function makeLevel1(setScene) {
                 bullet.update(this.zombies, this.bullets, this.player, this.camera);
             }
 
-            if (frameCount % 32 === 0) {
+            if (frameCount % 24 === 0) {
                 this.player.damageBy(this.zombies);
             }
 
