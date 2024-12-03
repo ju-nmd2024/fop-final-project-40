@@ -39,7 +39,7 @@ function shieldBar(maxShield, player) {
     fill(31, 32, 40);
     rect(3, 11, maxShield / 1.8, 5);
     // bar
-    fill(155, 166, 200);
+    fill(164, 175, 208);
     rect(3, 11, player.shield / 1.8, 5);
     // text
     textSize(5);

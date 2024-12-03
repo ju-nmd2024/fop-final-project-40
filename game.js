@@ -4,7 +4,7 @@ import { makeLevel2 } from "./level2.js";
 
 
 const scenes = ["menu", "level1", "level2"];
-let currentScene = "level2";
+let currentScene = "menu";
 function setScene(name) {
     if (scenes.includes(name)) {
         currentScene = name;
@@ -13,7 +13,6 @@ function setScene(name) {
 const menu = new Menu();
 const level1 = makeLevel1(setScene);
 const level2 = makeLevel2(setScene);
-
 
 
 
@@ -51,18 +50,18 @@ function draw() {
             menu.alpha = 255;
             menu.start = false;
             level1.update();
-            level1.draw();
+            level1.draw(currentScene);
             if (level1.loseScreen.restart) {
                 setup();         
                 setScene("menu");
                 level1.loseScreen.restart = false;
             }
             break;
-            case "level2":
+        case "level2":
             menu.alpha = 255;
             menu.start = false;
             level2.update();
-            level2.draw();
+            level2.draw(currentScene);
             if (level2.loseScreen.restart) {
                 setup();         
                 setScene("menu");

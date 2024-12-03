@@ -5,7 +5,9 @@ export default class LoseScreen {
     }
 
     load(){
-        this.deathMessage = loadImage("./assets/youdied.png");
+        this.deathMessage1 = loadImage("./assets/youdied.png");
+        this.deathMessage2 = loadImage("./assets/youdied2.png");
+
     }
 
 
@@ -17,12 +19,23 @@ export default class LoseScreen {
 
     }
    
-    draw() {
-        push();
-        background(0, 150);
-        imageMode(CORNER);
-        image(this.deathMessage, 0, 0);
-        pop();
+    draw(currentScene) {
+        switch (currentScene) {
+            case "level1":
+                push();
+                background(0, 150);
+                imageMode(CORNER);
+                image(this.deathMessage1, 0, 0);
+                pop();
+                break;
+            case "level2":
+                push();
+                background(0, 150);
+                imageMode(CORNER);
+                image(this.deathMessage2, 0, 0);
+                pop();
+            default:
+        }
     }
 }
 

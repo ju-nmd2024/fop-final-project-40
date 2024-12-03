@@ -74,22 +74,42 @@ export default class Player extends Entity {
                 let j = Math.floor((nextMove.y + 220) / 16);
 
                 if (map[j][x] > 5) {
-                    move.y = 0;
+                    move.y *= 0.1;
                 } if (map[y][i] > 5) {
-                    move.x = 0;
-                } 
+                    move.x *= 0.1;
+                }
               }
             this.x += move.x;
             this.y += move.y;
         }
+
+        let collisionPoints = [];
+        for (let vec of this.points) {
+            let x = Math.floor((this.x+vec.x + 220) / 16);
+            let y = Math.floor((this.y+vec.y + 220) / 16);
+
+            if (map[y][x] > 5) {
+                collisionPoints.push({x: vec.x, y: vec.y});
+            }
+        }
+        
+        let direction = {x: 0, y: 0};
+        for (let colVec of collisionPoints) {
+            direction.x += colVec.x;
+            direction.y += colVec.y;
+        }
+
+        this.x -= direction.x*0.05;
+        this.y -= direction.y*0.05;
+
     }
 
     setup() {
         this.points = [
-            createVector((this.width) / 2, (this.height) / 2),
-            createVector((this.width) / 2, -(this.height) / 2),
-            createVector(-(this.width) / 2, (this.height) / 2),
-            createVector(-(this.width) / 2, -(this.height) / 2),
+            createVector((this.width) / 3, (this.height) / 3),
+            createVector((this.width) / 3, -(this.height) / 3),
+            createVector(-(this.width) / 3, (this.height) / 3),
+            createVector(-(this.width) / 3, -(this.height) / 3),
         ];
 
         this.loadAnim();

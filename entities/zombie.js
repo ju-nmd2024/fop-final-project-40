@@ -28,6 +28,8 @@ export default class Zombie extends Entity {
     this.tint = 255;
     this.particle = [];
 
+    this.activationRange = 100;
+
     this.load();
     this.loadAnim();
     this.setup();
@@ -40,6 +42,7 @@ export default class Zombie extends Entity {
 
     // animations
     this.anims = {
+      "idle": 2,
       "run": { from: 0, to: 1, loop: true, speed: 3 },
       "hit": { from: 2, to: 3, loop: true, speed: 7 },
     };
@@ -48,6 +51,8 @@ export default class Zombie extends Entity {
     let distance = dist(this.x, this.y, player.x, player.y);
     if (distance < this.size + 2) {
       this.setAnim("hit");
+    } else if (distance > this.activationRange) {
+      this.setAnim("idle");
     } else {
       this.setAnim("run");
     }
@@ -55,10 +60,10 @@ export default class Zombie extends Entity {
 
   setup() {
     this.points = [
-      createVector((this.width) / 2, (this.height) / 2),
-      createVector((this.width) / 2, -(this.height) / 2),
-      createVector(-(this.width) / 2, (this.height) / 2),
-      createVector(-(this.width) / 2, -(this.height) / 2)
+      createVector((this.width) / 3, (this.height) / 3),
+      createVector((this.width) / 3, -(this.height) / 3),
+      createVector(-(this.width) / 3, (this.height) / 3),
+      createVector(-(this.width) / 3, -(this.height) / 3)
     ];
 
     this.loadAnim();

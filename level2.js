@@ -53,6 +53,7 @@ export function makeLevel2(setScene) {
         setup() {
 
             this.player.hp = 100;
+            this.player.shield = 0;
             this.player.x = -95;
             this.player.y = 420;
             this.gun.magCount = 1;
@@ -71,12 +72,12 @@ export function makeLevel2(setScene) {
 
 
             // creates zombies
-            for (let l = 0; l < 1;) { // ensures they only spawn on walkable tiles
+            for (let l = 0; l < 30;) { // ensures they only spawn on walkable tiles
                 let x = Math.floor((Math.random() * 300) / 16);
                 let y = Math.floor((Math.random() * 546 + 48) / 16);
                 if (this.map.tiles2[y][x] < 6) {
-                    x = Math.floor((x * 16 - 220) + 4);
-                    y = Math.floor((y * 16 - 220) + 4);
+                    x = Math.floor(x * 16 - 220);
+                    y = Math.floor(y * 16 - 220);
                     this.zombies.push(new Zombie(x, y, 20, 14));
                     l++;
                 }
@@ -136,6 +137,19 @@ export function makeLevel2(setScene) {
                 shield.update();
                 shield.collisionWith(this.player, this.shields, this.ui);
             }
+             // spawn over time
+             if (frameCount % 1000 === 0) {
+                for (let l = 0; l < 1;) { 
+                    let x = Math.floor((Math.random() * 550) / 16);
+                    let y = Math.floor((Math.random() * 350) / 16);
+                    if (this.map.tiles2[y][x] < 5) {
+                        x = Math.floor((x * 16 - 220) + 4);
+                        y = Math.floor((y * 16 - 220) + 4);
+                        this.ammoBoxes.push(new Ammo(x, y));
+                        l++;
+                    }
+                }
+            }
             for (let ammoBox of this.ammoBoxes) {
                 ammoBox.update();
                 ammoBox.collisionWith(this.player, this.gun, this.ammoBoxes, this.ui);
@@ -174,9 +188,19 @@ export function makeLevel2(setScene) {
                 let dy = this.player.y - zombie.y;
                 let angle = atan2(dy, dx);
 
+                zombie.Collide = false;
+                for(let otherZombie of this.zombies){
+                    if (zombie !== otherZombie) {
+                        if(dist(zombie.x + cos(angle)*2, zombie.y + sin(angle)*2, otherZombie.x, otherZombie.y) < zombie.size){
+                            zombie.Collide = true;
+                        }
+                    }
+                }
+
                 // move zombie in that direction unless already next to player
                 if (
-                    dist(this.player.x, this.player.y, zombie.x, zombie.y) < zombie.size + 1) {
+                    dist(this.player.x, this.player.y, zombie.x, zombie.y) < zombie.size + 1 ||
+                    dist(this.player.x, this.player.y, zombie.x, zombie.y) > zombie.activationRange || zombie.Collide) {
                 } else {
 
                     let moveX = cos(angle) * zombie.speed;
@@ -194,16 +218,35 @@ export function makeLevel2(setScene) {
                         let b = Math.floor((nextMove.y + 220) / 16);
 
                         if (this.map.tiles2[b][x] > 5) {
-                            moveY = 0;
+                            moveY *= -1.2;
                         }
 
                         if (this.map.tiles2[y][a] > 5) {
-                            moveX = 0;
+                            moveX *= -1.2;
                         }
                     }
                     zombie.x += moveX;
                     zombie.y += moveY;
                 }
+
+                let collisionPoints = [];
+                for (let vec of zombie.points) {
+                    let x = Math.floor((zombie.x+vec.x + 220) / 16);
+                    let y = Math.floor((zombie.y+vec.y + 220) / 16);
+        
+                    if (this.map.tiles2[y][x] > 5) {
+                        collisionPoints.push({x: vec.x, y: vec.y});
+                    }
+                }
+                
+                let direction = {x: 0, y: 0};
+                for (let colVec of collisionPoints) {
+                    direction.x += colVec.x;
+                    direction.y += colVec.y;
+                }
+        
+                zombie.x -= direction.x*0.05;
+                zombie.y -= direction.y*0.05;
 
                 // to make sure the zombies do not stack up if player moves
                 // creating a repel system
@@ -230,7 +273,7 @@ export function makeLevel2(setScene) {
             }
         },
 
-        draw() {
+        draw(currentScene) {
             this.map.draw(this.map.tiles2, this.camera, this.map.tileMap2);
             push();
             for (let bandage of this.bandages) {
@@ -264,7 +307,7 @@ export function makeLevel2(setScene) {
             this.ui.draw(this.player, this.gun);
 
             if (this.player.hp === 0) {
-                this.loseScreen.draw();
+                this.loseScreen.draw(currentScene);
             }
         },
     };
