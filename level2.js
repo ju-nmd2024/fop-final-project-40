@@ -14,9 +14,9 @@ import UI from "./ui.js";
 
 let particles = [];
 
-export function makeLevel1(setScene) {
+export function makeLevel2(setScene) {
     const loseScreen = new LoseScreen();
-    const camera = new Camera(0, 0);
+    const camera = new Camera(0, 0); 
     const player = new Player(0, 0);
     const gun = new Gun(0, 0);
     const zombies = [];
@@ -49,8 +49,8 @@ export function makeLevel1(setScene) {
         setup() {
 
             this.player.hp = 100;
-            this.player.x = 0;
-            this.player.y = 0;
+            this.player.x = -95;
+            this.player.y = 420;
             this.gun.magCount = 1;
             this.gun.ammoCount = 20;
 
@@ -67,21 +67,21 @@ export function makeLevel1(setScene) {
 
 
             // creates zombies
-            for (let l = 0; l < 5;) { // ensures they only spawn on walkable tiles
-                let x = Math.floor((Math.random() * 550) / 16);
-                let y = Math.floor((Math.random() * 350) / 16);
-                if (this.map.tiles1[y][x] < 5) {
+            for (let l = 0; l < 20;) { // ensures they only spawn on walkable tiles
+                let x = Math.floor((Math.random() * 300) / 16);
+                let y = Math.floor((Math.random() * 546 + 48) / 16);
+                if (this.map.tiles2[y][x] < 6) {
                     x = Math.floor((x * 16 - 220) + 4);
                     y = Math.floor((y * 16 - 220) + 4);
-                    this.zombies.push(new Zombie(x, y, 10, 9));
+                    this.zombies.push(new Zombie(x, y, 20, 14));
                     l++;
                 }
             }
             // creates bandages
             for (let l = 0; l < 2;) { // ensures they only spawn on walkable tiles
-                let x = Math.floor((Math.random() * 550) / 16);
-                let y = Math.floor((Math.random() * 350) / 16);
-                if (this.map.tiles1[y][x] < 5) {
+                let x = Math.floor((Math.random() * 300 ) / 16);
+                let y = Math.floor((Math.random() * 480 + 48) / 16);
+                if (this.map.tiles2[y][x] < 6) {
                     x = Math.floor((x * 16 - 220) + 4);
                     y = Math.floor((y * 16 - 220) + 4);
                     this.bandages.push(new Bandage(x, y));
@@ -89,10 +89,10 @@ export function makeLevel1(setScene) {
                 }
             }
             // creates ammo boxes
-            for (let l = 0; l < 2;) { // ensures they only spawn on walkable tiles
-                let x = Math.floor((Math.random() * 550) / 16);
-                let y = Math.floor((Math.random() * 350) / 16);
-                if (this.map.tiles1[y][x] < 5) {
+            for (let l = 0; l < 10;) { // ensures they only spawn on walkable tiles
+                let x = Math.floor((Math.random() * 300) / 16);
+                let y = Math.floor((Math.random() * 480 + 48) / 16);
+                if (this.map.tiles2[y][x] < 6) {
                     x = Math.floor((x * 16 - 220) + 4);
                     y = Math.floor((y * 16 - 220) + 4);
                     this.ammoBoxes.push(new Ammo(x, y));
@@ -106,7 +106,7 @@ export function makeLevel1(setScene) {
         },
 
         update() {
-            this.player.update(this.map.tiles1, this.gun);
+            this.player.update(this.map.tiles2, this.gun);
             this.gun.update(this.bullets, this.player);
             this.camera.update();
             this.loseScreen.update(this.player);
@@ -124,7 +124,7 @@ export function makeLevel1(setScene) {
                 zombie.update(this.player);
             }
             for (let bullet of this.bullets) {
-                bullet.update(this.zombies, this.bullets, this.player, this.camera, this.map.tiles1);
+                bullet.update(this.zombies, this.bullets, this.player, this.camera, this.map.tiles2);
             }
 
             if (frameCount % 24 === 0) {
@@ -172,11 +172,11 @@ export function makeLevel1(setScene) {
                         let a = Math.floor((nextMove.x + 220) / 16);
                         let b = Math.floor((nextMove.y + 220) / 16);
 
-                        if (this.map.tiles1[b][x] > 5) {
+                        if (this.map.tiles2[b][x] > 5) {
                             moveY = 0;
                         }
 
-                        if (this.map.tiles1[y][a] > 5) {
+                        if (this.map.tiles2[y][a] > 5) {
                             moveX = 0;
                         }
                     }
@@ -205,16 +205,12 @@ export function makeLevel1(setScene) {
 
 
             if (this.zombies.length === 0) {
-                if (frameCount % 400 === 0) {
-                    for (let i = 0; i < 1; i++) {
-                        setScene("level2");
-                    }
-                }
+                setScene("level2");
             }
         },
 
         draw() {
-            this.map.draw(this.map.tiles1, this.camera, this.map.tileMap1);
+            this.map.draw(this.map.tiles2, this.camera, this.map.tileMap2);
             push();
             for (let bandage of this.bandages) {
                 bandage.draw(this.camera);

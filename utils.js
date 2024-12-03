@@ -10,7 +10,7 @@ export function getFramesPos(numOfCols, numOfRows, tileWidth, tileHeight) {
         }
         currentTileY += tileHeight;
         currentTileX = 0;
-    }
+    } 
     return framesPos;
 }
 

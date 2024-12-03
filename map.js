@@ -118,7 +118,7 @@ export default class Map extends Entity {
     }
 
 
-    draw(tileset, camera) {
+    draw(tileset, camera, tilemap) {
         imageMode(CORNER);
         noStroke();
         push();
@@ -127,15 +127,15 @@ export default class Map extends Entity {
 
             for (let colIndex = 0; colIndex < tileset[rowIndex].length; colIndex++) {
 
-                this.tiles(tileset[rowIndex][colIndex], colIndex * this.tileSize, rowIndex * this.tileSize);
+                this.tiles(tileset[rowIndex][colIndex], colIndex * this.tileSize, rowIndex * this.tileSize, tilemap);
             }
         }
         pop();
     }
 
-    tiles(tile, x, y) {
+    tiles(tile, x, y, tilemap) {
         drawSprite(
-            this.tileMap1,
+            tilemap,
             x,
             y,
             this.frames[tile].x,

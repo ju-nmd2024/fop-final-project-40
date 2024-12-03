@@ -9,9 +9,9 @@ export default class LoseScreen {
     }
 
 
-    update(){
+    update(player){
         if(mouseIsPressed && window.mouseX > (192/2 - 45/2) *6 && window.mouseX < (192/2 + 45/2) *6 && 
-        window.mouseY > (108/2+10 - 15/2) *6 && window.mouseY < (108/2+10 + 15/2)*6){
+        window.mouseY > (108/2+10 - 15/2) *6 && window.mouseY < (108/2+10 + 15/2)*6 && player.hp === 0){
             this.restart = true;
         }
 

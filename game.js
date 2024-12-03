@@ -1,8 +1,9 @@
 import Menu from "./menu.js";
 import { makeLevel1 } from "./level1.js";
+import { makeLevel2 } from "./level2.js";
 
 
-const scenes = ["menu", "level1"];
+const scenes = ["menu", "level1", "level2"];
 let currentScene = "menu";
 function setScene(name) {
     if (scenes.includes(name)) {
@@ -10,13 +11,16 @@ function setScene(name) {
     }
 }
 const menu = new Menu();
-const level1 = makeLevel1();
+const level1 = makeLevel1(setScene);
+const level2 = makeLevel2(setScene);
+
 
 
 
 function preload() {
     menu.load();
     level1.load();
+    level2.load();
 
  
 }
@@ -29,6 +33,7 @@ function setup() {
     noSmooth();
 
     level1.setup();
+    level2.setup();
    
 }
 window.setup = setup;
@@ -48,8 +53,20 @@ function draw() {
             level1.update();
             level1.draw();
             if (level1.loseScreen.restart) {
-                         
+                setup();         
+                setScene("menu");
                 level1.loseScreen.restart = false;
+            }
+            break;
+            case "level2":
+            menu.alpha = 255;
+            menu.start = false;
+            level2.update();
+            level2.draw();
+            if (level2.loseScreen.restart) {
+                setup();         
+                setScene("menu");
+                level2.loseScreen.restart = false;
             }
             break;
         default:

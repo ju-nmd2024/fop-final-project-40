@@ -41,7 +41,7 @@ export default class Entity {
         const currentFrameData = this.frames[this.currentFrame];
 
         // make animation go through frames at constant speed
-        const durationPerFrame = 1000 / animData.speed;
+        const durationPerFrame = 1000 / animData.speed; 
         if (this.animationTimer >= durationPerFrame) {
             this.currentFrame++; // next frame
             this.animationTimer -= durationPerFrame; //reset timer

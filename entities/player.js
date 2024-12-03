@@ -23,6 +23,7 @@ export default class Player extends Entity {
         this.damaged = false;
         this.tint = 255;
         this.hp = 100;
+
     }
     load() {
         this.spriteRef = loadImage("./assets/player.png");
@@ -71,12 +72,12 @@ export default class Player extends Entity {
                 let i = Math.floor((nextMove.x + 220) / 16);
                 let j = Math.floor((nextMove.y + 220) / 16);
 
-                if (map.tiles1[j][x] > 5) {
+                if (map[j][x] > 5) {
                     move.y = 0;
-                } if (map.tiles1[y][i] > 5) {
+                } if (map[y][i] > 5) {
                     move.x = 0;
                 } 
-            }
+              }
             this.x += move.x;
             this.y += move.y;
         }
@@ -143,7 +144,7 @@ export default class Player extends Entity {
         for (let zombie of zombies) {
             let distance = dist(this.x, this.y, zombie.x, zombie.y);
             if (distance < 16 && this.hp > 0) {
-                this.hp -= 9;
+                this.hp -= zombie.strength;
                 this.damaged = true;
             }
             if (this.hp < 0) {

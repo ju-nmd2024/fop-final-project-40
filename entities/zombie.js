@@ -2,7 +2,7 @@ import Entity from "./entity.js";
 import { getFramesPos, drawSprite } from "../utils.js";
 
 export default class Zombie extends Entity {
-  constructor(x, y) {
+  constructor(x, y, hp, strength) {
     super();
 
     this.speed = 0.2; // zombie speed
@@ -23,7 +23,8 @@ export default class Zombie extends Entity {
     this.maxZombieCount = 20; // max zombies on screen
     this.size = 15;
 
-    this.hp = 20;
+    this.strength = strength;
+    this.hp = hp;
     this.tint = 255;
     this.particle = [];
 
