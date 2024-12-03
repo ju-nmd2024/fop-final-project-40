@@ -8,6 +8,8 @@ import DamageParticle from "./entities/particleDamage.js";
 
 import Bandage from "./entities/bandage.js";
 import Ammo from "./entities/ammoBox.js";
+import Shield from "./entities/shield.js";
+
 
 import Map from "./map.js";
 import UI from "./ui.js";
@@ -23,6 +25,7 @@ export function makeLevel2(setScene) {
 
     const bullets = [];
     const bandages = [];
+    const shields = [];
     const ammoBoxes = [];
 
     const map = new Map();
@@ -36,6 +39,7 @@ export function makeLevel2(setScene) {
 
         bullets: bullets,
         bandages: bandages,
+        shields: shields,
         ammoBoxes: ammoBoxes,
 
         map: map,
@@ -67,7 +71,7 @@ export function makeLevel2(setScene) {
 
 
             // creates zombies
-            for (let l = 0; l < 20;) { // ensures they only spawn on walkable tiles
+            for (let l = 0; l < 1;) { // ensures they only spawn on walkable tiles
                 let x = Math.floor((Math.random() * 300) / 16);
                 let y = Math.floor((Math.random() * 546 + 48) / 16);
                 if (this.map.tiles2[y][x] < 6) {
@@ -88,6 +92,19 @@ export function makeLevel2(setScene) {
                     l++;
                 }
             }
+
+            // creates shields rn its a bandage
+            for (let l = 0; l < 1;) { // ensures they only spawn on walkable tiles
+                let x = Math.floor((Math.random() * 300) / 16);
+                let y = Math.floor(620 / 16);
+                if (this.map.tiles2[y][x] < 6) {
+                    x = Math.floor((x * 16 - 220) + 4);
+                    y = Math.floor((y * 16 - 220) + 4);
+                    this.shields.push(new Shield(x, y));
+                    l++;
+                }
+            }
+
             // creates ammo boxes
             for (let l = 0; l < 10;) { // ensures they only spawn on walkable tiles
                 let x = Math.floor((Math.random() * 300) / 16);
@@ -114,6 +131,10 @@ export function makeLevel2(setScene) {
             for (let bandage of this.bandages) {
                 bandage.update();
                 bandage.collisionWith(this.player, this.bandages, this.ui);
+            }
+            for (let shield of this.shields) {
+                shield.update();
+                shield.collisionWith(this.player, this.shields, this.ui);
             }
             for (let ammoBox of this.ammoBoxes) {
                 ammoBox.update();
@@ -214,6 +235,9 @@ export function makeLevel2(setScene) {
             push();
             for (let bandage of this.bandages) {
                 bandage.draw(this.camera);
+            }
+            for (let shield of this.shields) {
+                shield.draw(this.camera);
             }
             for (let ammoBox of this.ammoBoxes) {
                 ammoBox.draw(this.camera);

@@ -42,7 +42,7 @@ export default class Ammo extends Entity {
         noStroke();
         fill(125,120,100);
         ellipse(this.x + camera.x, this.y + camera.y, this.width);
-        pop(); */
+        pop(); */ 
 
         drawSprite(
             this.spriteRef,

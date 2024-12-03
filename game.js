@@ -4,7 +4,7 @@ import { makeLevel2 } from "./level2.js";
 
 
 const scenes = ["menu", "level1", "level2"];
-let currentScene = "menu";
+let currentScene = "level2";
 function setScene(name) {
     if (scenes.includes(name)) {
         currentScene = name;

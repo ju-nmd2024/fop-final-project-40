@@ -99,6 +99,7 @@ export function makeLevel1(setScene) {
                     l++;
                 }
             }
+            
             ui.setup(this.player);
 
             
@@ -115,6 +116,7 @@ export function makeLevel1(setScene) {
                 bandage.update();
                 bandage.collisionWith(this.player, this.bandages, this.ui);
             }
+
             for (let ammoBox of this.ammoBoxes) {
                 ammoBox.update();
                 ammoBox.collisionWith(this.player, this.gun, this.ammoBoxes, this.ui);

@@ -23,6 +23,7 @@ export default class Player extends Entity {
         this.damaged = false;
         this.tint = 255;
         this.hp = 100;
+        this.shield = 0;
 
     }
     load() {
@@ -143,12 +144,21 @@ export default class Player extends Entity {
     damageBy(zombies) {
         for (let zombie of zombies) {
             let distance = dist(this.x, this.y, zombie.x, zombie.y);
-            if (distance < 16 && this.hp > 0) {
+
+            if (distance < 16 && this.shield > 0){
+                this.shield -= zombie.strength;
+                this.damaged = true;
+            }
+            else if (distance < 16 && this.hp > 0) {
                 this.hp -= zombie.strength;
                 this.damaged = true;
             }
+            
             if (this.hp < 0) {
                 this.hp = 0;
+            } 
+            if (this.shield < 0 ){
+                this.shield = 0;
             }
         }
     }

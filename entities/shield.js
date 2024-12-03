@@ -1,7 +1,7 @@
 import Entity from "./entity.js";
 import { getFramesPos, drawSprite } from "../utils.js";
 
-export default class Bandage extends Entity {
+export default class Shield extends Entity {
     constructor(x, y) {
         super();
         this.spriteRef = null;
@@ -55,12 +55,12 @@ export default class Bandage extends Entity {
         );
     }
 
-    collisionWith(player, bandages, ui) {
-        if (dist(player.x, player.y, this.x, this.y) < this.width && player.hp < (ui.maxHP - 1)) {
-            for (let i = 0; i < 20 && player.hp !== ui.maxHP; i++) {
-                player.hp += 1;
+    collisionWith(player, shields, ui) {
+        if (dist(player.x, player.y, this.x, this.y) < this.width && player.shield < (ui.maxShield - 1)) {
+            for (let i = 0; i < 50 && player.shield !== ui.maxShield; i++) {
+                player.shield += 1;
             }
-            bandages.splice(bandages.indexOf(this), 1);
+            shields.splice(shields.indexOf(this), 1);
         }
     }
 }
