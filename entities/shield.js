@@ -15,13 +15,13 @@ export default class Shield extends Entity {
         this.setup();
     }
     load() {
-        this.spriteRef = loadImage("./assets/bandages.png");
+        this.spriteRef = loadImage("./assets/shield.png");
     }
     loadAnim() {
-        this.frames = getFramesPos(4, 4, this.width + 1, this.height + 1);
+        this.frames = getFramesPos(4, 3, this.width + 1, this.height + 1);
         // animations
         this.anims = {
-            "loop": { from: 0, to: 15, loop: true, speed: 7 },
+            "loop": { from: 0, to: 11, loop: true, speed: 7 },
         };
     }
     setup() {

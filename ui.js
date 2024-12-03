@@ -10,7 +10,9 @@ export default class UI {
     draw(player, gun) {
         ammoUI(gun);
         healthBar(this.maxHP, player);
-        shieldBar(this.maxShield, player);
+        if (player.shield > 0) {
+            shieldBar(this.maxShield, player);
+        }
     }
 }
 
@@ -32,18 +34,17 @@ function healthBar(maxHP, player) {
 
 function shieldBar(maxShield, player) {
     push();
-    translate(0, 7);
     // background
-    stroke(0, 0, 50); 
-    fill(0, 0, 50);
-    rect(3, 3, maxShield / 1.8, 5);
+    stroke(31, 32, 40); 
+    fill(31, 32, 40);
+    rect(3, 11, maxShield / 1.8, 5);
     // bar
-    fill(0, 0, 255);
-    rect(3, 3, player.shield / 1.8, 5);
+    fill(155, 166, 200);
+    rect(3, 11, player.shield / 1.8, 5);
     // text
     textSize(5);
     strokeWeight(1.8);
-    text(player.shield, 61, 7.3);
+    text(player.shield, 61, 15.3);
     pop();
 }
 
