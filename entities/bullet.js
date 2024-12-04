@@ -24,7 +24,7 @@ export default class Bullet {
         let x = Math.floor((this.x + 220) / 16);
         let y = Math.floor((this.y + 220) / 16);
 
-        if (map[y][x] > 21) {
+        if (map[y][x] > 21 && map[y][x] < 39) {
             bullets.splice(bullets.indexOf(this), 1);
         }
     }

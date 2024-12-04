@@ -15,9 +15,9 @@ import UI from "./ui.js";
 
 let particles = [];
 
-export function makeLevel2(setScene) {
+export function makeLevel3(setScene) {
     const loseScreen = new LoseScreen();
-    const camera = new Camera(0, 0); 
+    const camera = new Camera(0, 0);
     const player = new Player(0, 0);
     const gun = new Gun(0, 0);
     const zombies = [];
@@ -53,8 +53,8 @@ export function makeLevel2(setScene) {
 
             this.player.hp = savedVars.hp;
             this.player.shield = savedVars.shield;
-            this.player.x = -95;
-            this.player.y = 420;
+            this.player.x = 316;
+            this.player.y = 108;
             this.gun.magCount = savedVars.magCount;
             this.gun.ammoCount = savedVars.ammoCount;
 
@@ -66,61 +66,50 @@ export function makeLevel2(setScene) {
             this.player.setup();
             this.gun.setup();
             this.camera.attachTo(this.player);
-
+  
             // creates zombies
-            for (let l = 0; l < 2;) { // ensures they only spawn on walkable tiles
-                let x = Math.floor((Math.random() * 300) / 16);
-                let y = Math.floor((Math.random() * 546 + 48) / 16);
-                if (this.map.tiles2[y][x] < 6) {
+            for (let l = 0; l < 5;) { // ensures they only spawn on walkable tiles
+                let x = Math.floor((Math.random() * 900) / 16);
+                let y = Math.floor((Math.random() * 590) / 16);
+                if (this.map.tiles3[y][x] < 6 || this.map.tiles3[y][x] > 38) {
                     x = Math.floor(x * 16 - 220);
                     y = Math.floor(y * 16 - 220);
-                    this.zombies.push(new Zombie(x, y, 20, 14));
+                    this.zombies.push(new Zombie(x, y, 10, 9));
                     l++;
                 }
             }
             // creates bandages
-            for (let l = 0; l < 2;) { // ensures they only spawn on walkable tiles
-                let x = Math.floor((Math.random() * 300 ) / 16);
-                let y = Math.floor((Math.random() * 480 + 48) / 16);
-                if (this.map.tiles2[y][x] < 6) {
+            for (let l = 0; l < 10;) { // ensures they only spawn on walkable tiles
+                let x = Math.floor((Math.random() * 900) / 16);
+                let y = Math.floor((Math.random() * 590) / 16);
+                if (this.map.tiles3[y][x] < 6 || this.map.tiles3[y][x] > 38) {
                     x = Math.floor((x * 16 - 220) + 4);
                     y = Math.floor((y * 16 - 220) + 4);
                     this.bandages.push(new Bandage(x, y));
                     l++;
                 }
             }
-
             // creates shields
-            for (let l = 0; l < 1;) { // ensures they only spawn on walkable tiles
-                let x = Math.floor((Math.random() * 300) / 16);
-                let y = Math.floor(620 / 16);
-                if (this.map.tiles2[y][x] < 6) {
-                    x = Math.floor((x * 16 - 220) + 4);
-                    y = Math.floor((y * 16 - 220) + 4);
-                    this.shields.push(new Shield(x, y));
-                    l++;
-                }
-            }
+                this.shields.push(new Shield(272 + 4, 102 + 4));
+
 
             // creates ammo boxes
             for (let l = 0; l < 10;) { // ensures they only spawn on walkable tiles
-                let x = Math.floor((Math.random() * 300) / 16);
-                let y = Math.floor((Math.random() * 480 + 48) / 16);
-                if (this.map.tiles2[y][x] < 6) {
+                let x = Math.floor((Math.random() * 900) / 16);
+                let y = Math.floor((Math.random() * 590) / 16);
+                if (this.map.tiles3[y][x] < 6 || this.map.tiles3[y][x] > 38) {
                     x = Math.floor((x * 16 - 220) + 4);
                     y = Math.floor((y * 16 - 220) + 4);
                     this.ammoBoxes.push(new Ammo(x, y));
                     l++;
                 }
             }
-            this.ui.setup(this.player);
 
-            
-
+            this.ui.setup(this.player);;
         },
 
-        update(level3, savedVars) {
-            this.player.update(this.map.tiles2, this.gun);
+        update(savedVars) {
+            this.player.update(this.map.tiles3, this.gun);
             this.gun.update(this.bullets, this.player);
             this.camera.update();
             this.loseScreen.update(this.player);
@@ -133,12 +122,12 @@ export function makeLevel2(setScene) {
                 shield.update();
                 shield.collisionWith(this.player, this.shields, this.ui);
             }
-             // spawn over time
-             if (this.ammoBoxes.length < 4 && frameCount % 1000 === 0) {
+            // spawn over time
+            if (this.ammoBoxes.length < 1 && frameCount % 1000 === 0) {
                 for (let l = 0; l < 1;) { 
-                    let x = Math.floor((Math.random() * 550) / 16);
-                    let y = Math.floor((Math.random() * 350) / 16);
-                    if (this.map.tiles2[y][x] < 5) {
+                    let x = Math.floor((Math.random() * 900) / 16);
+                    let y = Math.floor((Math.random() * 590) / 16);
+                    if (this.map.tiles3[y][x] < 6 || this.map.tiles3[y][x] > 38) {
                         x = Math.floor((x * 16 - 220) + 4);
                         y = Math.floor((y * 16 - 220) + 4);
                         this.ammoBoxes.push(new Ammo(x, y));
@@ -155,7 +144,7 @@ export function makeLevel2(setScene) {
                 zombie.update(this.player);
             }
             for (let bullet of this.bullets) {
-                bullet.update(this.zombies, this.bullets, this.player, this.camera, this.map.tiles2);
+                bullet.update(this.zombies, this.bullets, this.player, this.camera, this.map.tiles3);
             }
 
             if (frameCount % 24 === 0) {
@@ -194,11 +183,9 @@ export function makeLevel2(setScene) {
                 }
 
                 // move zombie in that direction unless already next to player
-                if (
-                    dist(this.player.x, this.player.y, zombie.x, zombie.y) < zombie.size + 1 ||
-                    dist(this.player.x, this.player.y, zombie.x, zombie.y) > zombie.activationRange || zombie.Collide) {
+                if (dist(this.player.x, this.player.y, zombie.x, zombie.y) < zombie.size + 1 ||
+                dist(this.player.x, this.player.y, zombie.x, zombie.y) > zombie.activationRange || zombie.Collide) {
                 } else {
-
                     let moveX = cos(angle) * zombie.speed;
                     let moveY = sin(angle) * zombie.speed;
 
@@ -213,11 +200,11 @@ export function makeLevel2(setScene) {
                         let a = Math.floor((nextMove.x + 220) / 16);
                         let b = Math.floor((nextMove.y + 220) / 16);
 
-                        if (this.map.tiles2[b][x] > 5) {
+                        if (this.map.tiles3[b][x] > 5 && this.map.tiles3[b][x] < 39) {
                             moveY *= -1.2;
                         }
 
-                        if (this.map.tiles2[y][a] > 5) {
+                        if (this.map.tiles3[y][a] > 5 && this.map.tiles3[y][a] < 39) {
                             moveX *= -1.2;
                         }
                     }
@@ -230,7 +217,7 @@ export function makeLevel2(setScene) {
                     let x = Math.floor((zombie.x+vec.x + 220) / 16);
                     let y = Math.floor((zombie.y+vec.y + 220) / 16);
         
-                    if (this.map.tiles2[y][x] > 5) {
+                    if (this.map.tiles3[y][x] > 5 && this.map.tiles3[y][x] < 39) {
                         collisionPoints.push({x: vec.x, y: vec.y});
                     }
                 }
@@ -264,21 +251,21 @@ export function makeLevel2(setScene) {
             this.player.pushedBy(this.zombies);
 
             // level beat check
-            if (this.zombies.length === 0) {
+            /*if (this.zombies.length === 0) {
                 if (frameCount % 150 === 0) {
                     savedVars.hp = this.player.hp;
                     savedVars.shield = this.player.shield;
                     savedVars.magCount = this.gun. magCount;
                     savedVars.ammoCount = this.gun.ammoCount;
 
-                    level3.setup(savedVars);
-                    setScene("level3");
+                    level2.setup(savedVars);
+                    setScene("level2");
                 }
-            }
+            }*/
         },
 
         draw(currentScene) {
-            this.map.draw(this.map.tiles2, this.camera, this.map.tileMap2);
+            this.map.draw(this.map.tiles3, this.camera, this.map.tileMap3);
             push();
             for (let bandage of this.bandages) {
                 bandage.draw(this.camera);

@@ -40,7 +40,7 @@ export default class Gun extends Entity {
             "idle": 0,
             "run": { from: 1, to: 2, loop: true, speed: 7 },
             "shoot": { from: 3, to: 5, loop: false, speed: 16 },
-            "reload": { from: 6, to: 8, loop: false, speed: 2 },
+            "reload": { from: 6, to: 8, loop: false, speed: 1.8 },
         };
     }
 

@@ -73,12 +73,12 @@ export default class Player extends Entity {
                 let i = Math.floor((nextMove.x + 220) / 16);
                 let j = Math.floor((nextMove.y + 220) / 16);
 
-                if (map[j][x] > 5) {
+                if (map[j][x] > 5 && map[j][x] < 39) {
                     move.y *= 0.1;
-                } if (map[y][i] > 5) {
+                } if (map[y][i] > 5 && map[y][i] < 39) {
                     move.x *= 0.1;
                 }
-              }
+            }
             this.x += move.x;
             this.y += move.y;
         }
@@ -88,7 +88,7 @@ export default class Player extends Entity {
             let x = Math.floor((this.x+vec.x + 220) / 16);
             let y = Math.floor((this.y+vec.y + 220) / 16);
 
-            if (map[y][x] > 5) {
+            if (map[y][x] > 5 && map[y][x] < 39) {
                 collisionPoints.push({x: vec.x, y: vec.y});
             }
         }
