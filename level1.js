@@ -118,7 +118,7 @@ export function makeLevel1(setScene) {
                 bandage.collisionWith(this.player, this.bandages, this.ui);
             }
             // spawn over time
-            if (frameCount % 1000 === 0) {
+            if (this.ammoBoxes.length < 1 && frameCount % 1000 === 0) {
                 for (let l = 0; l < 1;) { 
                     let x = Math.floor((Math.random() * 550) / 16);
                     let y = Math.floor((Math.random() * 350) / 16);

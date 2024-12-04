@@ -72,7 +72,7 @@ export function makeLevel2(setScene) {
 
 
             // creates zombies
-            for (let l = 0; l < 30;) { // ensures they only spawn on walkable tiles
+            for (let l = 0; l < 20;) { // ensures they only spawn on walkable tiles
                 let x = Math.floor((Math.random() * 300) / 16);
                 let y = Math.floor((Math.random() * 546 + 48) / 16);
                 if (this.map.tiles2[y][x] < 6) {
@@ -138,7 +138,7 @@ export function makeLevel2(setScene) {
                 shield.collisionWith(this.player, this.shields, this.ui);
             }
              // spawn over time
-             if (frameCount % 1000 === 0) {
+             if (this.ammoBoxes.length < 4 && frameCount % 1000 === 0) {
                 for (let l = 0; l < 1;) { 
                     let x = Math.floor((Math.random() * 550) / 16);
                     let y = Math.floor((Math.random() * 350) / 16);
