@@ -1,11 +1,9 @@
 export default class UI {
     constructor() {
-        this.maxHP = null;
-        this.maxShield = null;
+        this.maxHP = 100;
+        this.maxShield = 100;
     }
     setup(player) {
-        this.maxHP = player.hp;
-        this.maxShield = 100;
     }
     draw(player, gun) {
         ammoUI(gun);

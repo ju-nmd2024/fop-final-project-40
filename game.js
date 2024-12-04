@@ -2,6 +2,13 @@ import Menu from "./menu.js";
 import { makeLevel1 } from "./level1.js";
 import { makeLevel2 } from "./level2.js";
 
+let savedVars = {
+    hp: 100,
+    shield: 0,
+    magCount: 1,
+    ammoCount: 20
+}
+
 
 const scenes = ["menu", "level1", "level2"];
 let currentScene = "menu";
@@ -32,7 +39,7 @@ function setup() {
     noSmooth();
 
     level1.setup();
-    level2.setup();
+    //level2.setup();
    
 }
 window.setup = setup;
@@ -49,7 +56,7 @@ function draw() {
         case "level1":
             menu.alpha = 255;
             menu.start = false;
-            level1.update();
+            level1.update(level2, savedVars);
             level1.draw(currentScene);
             if (level1.loseScreen.restart) {
                 setup();         
@@ -60,7 +67,7 @@ function draw() {
         case "level2":
             menu.alpha = 255;
             menu.start = false;
-            level2.update();
+            level2.update(savedVars);
             level2.draw(currentScene);
             if (level2.loseScreen.restart) {
                 setup();         

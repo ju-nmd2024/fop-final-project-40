@@ -50,14 +50,14 @@ export function makeLevel2(setScene) {
             this.player.load();
             this.loseScreen.load();
         },
-        setup() {
+        setup(savedVars) {
 
-            this.player.hp = 100;
-            this.player.shield = 0;
+            this.player.hp = savedVars.hp;
+            this.player.shield = savedVars.shield;
             this.player.x = -95;
             this.player.y = 420;
-            this.gun.magCount = 1;
-            this.gun.ammoCount = 20;
+            this.gun.magCount = savedVars.magCount;
+            this.gun.ammoCount = savedVars.ammoCount;
 
             this.zombies = [];
             this.bandages = [];
@@ -94,7 +94,7 @@ export function makeLevel2(setScene) {
                 }
             }
 
-            // creates shields rn its a bandage
+            // creates shields
             for (let l = 0; l < 1;) { // ensures they only spawn on walkable tiles
                 let x = Math.floor((Math.random() * 300) / 16);
                 let y = Math.floor(620 / 16);
@@ -117,7 +117,7 @@ export function makeLevel2(setScene) {
                     l++;
                 }
             }
-            ui.setup(this.player);
+            this.ui.setup(this.player);
 
             
 

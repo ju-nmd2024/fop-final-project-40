@@ -101,13 +101,13 @@ export function makeLevel1(setScene) {
                 }
             }
             
-            ui.setup(this.player);
+            this.ui.setup(this.player);
 
             
 
         },
 
-        update() {
+        update(level2, savedVars) {
             this.player.update(this.map.tiles1, this.gun);
             this.gun.update(this.bullets, this.player);
             this.camera.update();
@@ -245,9 +245,16 @@ export function makeLevel1(setScene) {
             // push player
             this.player.pushedBy(this.zombies);
 
-
+            // level beat check
             if (this.zombies.length === 0) {
                 if (frameCount % 150 === 0) {
+                    savedVars.hp = this.player.hp;
+                    savedVars.shield = this.player.shield;
+                    savedVars.magCount = this.gun. magCount;
+                    savedVars.ammoCount = this.gun.ammoCount;
+
+                    level2.setup(savedVars);
+                    console.log('saved');
                     setScene("level2");
                 }
             }
