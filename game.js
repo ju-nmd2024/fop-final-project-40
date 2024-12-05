@@ -84,10 +84,11 @@ function draw() {
             menu.start = false;
             level3.update(savedVars);
             level3.draw(currentScene);
-            if (level3.loseScreen.restart) {
+            if (level3.loseScreen.restart || level3.winScreen.restart) {
                 setup();         
                 setScene("menu");
                 level3.loseScreen.restart = false;
+                level3.winScreen.restart = false;
             }
             break;
         default:
