@@ -1,5 +1,3 @@
-import DamageParticle from "./particleDamage.js";
-
 export default class Bullet {
     constructor(x, y, angle) {
         this.angle = angle;

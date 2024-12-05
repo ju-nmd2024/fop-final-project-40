@@ -7,7 +7,7 @@ export default class LoseScreen {
     load(){
         this.deathMessage1 = loadImage("./assets/youdied.png");
         this.deathMessage2 = loadImage("./assets/youdied2.png");
-
+        this.deathMessage3 = loadImage("./assets/youdied3.png");
     }
 
 
@@ -34,6 +34,14 @@ export default class LoseScreen {
                 imageMode(CORNER);
                 image(this.deathMessage2, 0, 0);
                 pop();
+                break;
+            case "level3":
+                push();
+                background(0, 150);
+                imageMode(CORNER);
+                image(this.deathMessage2, 0, 0);
+                pop();
+                break;
             default:
         }
     }
