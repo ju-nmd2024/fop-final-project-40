@@ -68,13 +68,13 @@ export function makeLevel2(setScene) {
             this.camera.attachTo(this.player);
 
             // creates zombies
-            for (let l = 0; l < 2;) { // ensures they only spawn on walkable tiles
+            for (let l = 0; l < 15;) { // ensures they only spawn on walkable tiles
                 let x = Math.floor((Math.random() * 300) / 16);
                 let y = Math.floor((Math.random() * 546 + 48) / 16);
                 if (this.map.tiles2[y][x] < 6) {
                     x = Math.floor(x * 16 - 220);
                     y = Math.floor(y * 16 - 220);
-                    this.zombies.push(new Zombie(x, y, 20, 14));
+                    this.zombies.push(new Zombie(x, y, 10, 14));
                     l++;
                 }
             }
@@ -103,7 +103,7 @@ export function makeLevel2(setScene) {
             }
 
             // creates ammo boxes
-            for (let l = 0; l < 10;) { // ensures they only spawn on walkable tiles
+            for (let l = 0; l < 5;) { // ensures they only spawn on walkable tiles
                 let x = Math.floor((Math.random() * 300) / 16);
                 let y = Math.floor((Math.random() * 480 + 48) / 16);
                 if (this.map.tiles2[y][x] < 6) {

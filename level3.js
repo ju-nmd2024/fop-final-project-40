@@ -68,13 +68,13 @@ export function makeLevel3(setScene) {
             this.camera.attachTo(this.player);
   
             // creates zombies
-            for (let l = 0; l < 5;) { // ensures they only spawn on walkable tiles
+            for (let l = 0; l < 45;) { // ensures they only spawn on walkable tiles
                 let x = Math.floor((Math.random() * 900) / 16);
                 let y = Math.floor((Math.random() * 590) / 16);
                 if (this.map.tiles3[y][x] < 6 || this.map.tiles3[y][x] > 38) {
                     x = Math.floor(x * 16 - 220);
                     y = Math.floor(y * 16 - 220);
-                    this.zombies.push(new Zombie(x, y, 10, 9));
+                    this.zombies.push(new Zombie(x, y, 16, 27));
                     l++;
                 }
             }
@@ -94,7 +94,7 @@ export function makeLevel3(setScene) {
 
 
             // creates ammo boxes
-            for (let l = 0; l < 10;) { // ensures they only spawn on walkable tiles
+            for (let l = 0; l < 20;) { // ensures they only spawn on walkable tiles
                 let x = Math.floor((Math.random() * 900) / 16);
                 let y = Math.floor((Math.random() * 590) / 16);
                 if (this.map.tiles3[y][x] < 6 || this.map.tiles3[y][x] > 38) {
@@ -123,7 +123,7 @@ export function makeLevel3(setScene) {
                 shield.collisionWith(this.player, this.shields, this.ui);
             }
             // spawn over time
-            if (this.ammoBoxes.length < 1 && frameCount % 1000 === 0) {
+            if (this.ammoBoxes.length < 7 && frameCount % 1000 === 0) {
                 for (let l = 0; l < 1;) { 
                     let x = Math.floor((Math.random() * 900) / 16);
                     let y = Math.floor((Math.random() * 590) / 16);

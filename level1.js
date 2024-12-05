@@ -74,7 +74,7 @@ export function makeLevel1(setScene) {
                 if (this.map.tiles1[y][x] < 5) {
                     x = Math.floor(x * 16 - 220);
                     y = Math.floor(y * 16 - 220);
-                    this.zombies.push(new Zombie(x, y, 10, 9));
+                    this.zombies.push(new Zombie(x, y, 8, 9));
                     l++;
                 }
             }
