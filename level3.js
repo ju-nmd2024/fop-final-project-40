@@ -30,6 +30,7 @@ export function makeLevel3(setScene) {
     const gun = new Gun(0, 0);
     const zombies = [];
     const boss = [];
+    let bossFinder = null;
 
     const bullets = [];
     const bandages = [];
@@ -355,6 +356,14 @@ export function makeLevel3(setScene) {
             this.player.pushedBy(this.zombies);
             this.player.pushedBy(this.boss);
             }
+
+            for (let bos of this.boss) {
+                if (this.boss.length > 0 && dist(this.player.x, this.player.y, bos.x, bos.y) > 100) {
+                    bossFinder = new BossFinder( bos, this.player );
+                }
+            }
+
+
         },
 
         draw(currentScene) {
@@ -395,11 +404,8 @@ export function makeLevel3(setScene) {
             this.ui.draw(this.player, this.gun, this.zombies);
             this.minimap.draw();
 
-            for (let bos of this.boss) {
-                if (this.boss.length > 0 && dist(this.player.x, this.player.y, bos.x, bos.y) > 100) {
-                    let bossFinder = new BossFinder( Math.atan2( bos.y - this.player.y, bos.x - this.player.x) + radians(90) );
-                    bossFinder.draw();
-                }
+            if (bossFinder !== null) {
+                bossFinder.draw();
             }
 
             if (this.player.hp === 0) {
