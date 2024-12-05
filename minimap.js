@@ -20,8 +20,6 @@ export default class Minimap {
 
         this.dot.x = px + this.x;
         this.dot.y = py + this.y;
-
-        console.log(this.dot);
     }
     draw() {
         push();
