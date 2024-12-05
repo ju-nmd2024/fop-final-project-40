@@ -5,7 +5,7 @@ export default class WinScreen {
     }
 
     load(){
-        this.window = loadImage("./assets/youdied.png");
+        this.window = loadImage("./assets/win.png");
     }
 
 
