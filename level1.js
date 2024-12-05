@@ -288,7 +288,7 @@ export function makeLevel1(setScene) {
                 }
             }
 
-            this.ui.draw(this.player, this.gun);
+            this.ui.draw(this.player, this.gun, this.zombies);
 
             if (this.player.hp === 0) {
                 this.loseScreen.draw(currentScene);

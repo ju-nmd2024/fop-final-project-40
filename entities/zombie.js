@@ -28,7 +28,7 @@ export default class Zombie extends Entity {
     this.tint = 255;
     this.particle = [];
 
-    this.activationRange = 100;
+    this.activationRange = 108;
 
     this.load();
     this.loadAnim();

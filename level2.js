@@ -139,6 +139,7 @@ export function makeLevel2(setScene) {
                     let x = Math.floor((Math.random() * 550) / 16);
                     let y = Math.floor((Math.random() * 350) / 16);
                     if (this.map.tiles2[y][x] < 5) {
+
                         x = Math.floor((x * 16 - 220) + 4);
                         y = Math.floor((y * 16 - 220) + 4);
                         this.ammoBoxes.push(new Ammo(x, y));
@@ -308,7 +309,7 @@ export function makeLevel2(setScene) {
                 }
             }
 
-            this.ui.draw(this.player, this.gun);
+            this.ui.draw(this.player, this.gun, this.zombies);
 
             if (this.player.hp === 0) {
                 this.loseScreen.draw(currentScene);

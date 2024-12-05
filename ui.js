@@ -5,11 +5,24 @@ export default class UI {
     }
     setup(player) {
     }
-    draw(player, gun) {
+    draw(player, gun, zombies) {
         ammoUI(gun);
         healthBar(this.maxHP, player);
         if (player.shield > 0) {
             shieldBar(this.maxShield, player);
+        }
+
+
+        if (zombies.length <= 3) {
+            push();
+            stroke(0);
+            strokeWeight(2);
+            fill(255);
+            textAlign(CENTER);
+            textSize(7);
+            textStyle(BOLD);
+            text(zombies.length + " ZOMBIES LEFT!", 192/2, 108-5);
+            pop();
         }
     }
 }

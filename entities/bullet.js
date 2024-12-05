@@ -17,7 +17,7 @@ export default class Bullet {
         this.x += Math.cos(this.angle) * this.speed;
         this.y += Math.sin(this.angle) * this.speed;
 
-        if (dist(this.x, this.y, player.x, player.y) > 90) { // so that bullets dont travel forever
+        if (dist(this.x, this.y, player.x, player.y) > 100) { // so that bullets dont travel forever
             bullets.splice(bullets.indexOf(this), 1);
         } 
         
