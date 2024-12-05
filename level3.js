@@ -404,8 +404,10 @@ export function makeLevel3(setScene) {
             this.ui.draw(this.player, this.gun, this.zombies);
             this.minimap.draw();
 
-            if (bossFinder !== null) {
-                bossFinder.draw();
+            for (let bos of this.boss) {
+                if (bossFinder !== null && dist(bos.x, bos.y, this.player.x, this.player.y) > 100) {
+                    bossFinder.draw();
+                }
             }
 
             if (this.player.hp === 0) {
