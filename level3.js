@@ -2,6 +2,7 @@ import LoseScreen from "./loseScreen.js";
 import WinScreen from "./winScreen.js";
 
 import Minimap from "./minimap.js";
+import BossFinder from "./bossFinder.js";
 
 import Camera from "./entities/camera.js";
 import Player from "./entities/player.js";
@@ -393,6 +394,13 @@ export function makeLevel3(setScene) {
 
             this.ui.draw(this.player, this.gun, this.zombies);
             this.minimap.draw();
+
+            for (let bos of this.boss) {
+                if (this.boss.length > 0 && dist(this.player.x, this.player.y, bos.x, bos.y) > 100) {
+                    let bossFinder = new BossFinder( Math.atan2( bos.y - this.player.y, bos.x - this.player.x) + radians(90) );
+                    bossFinder.draw();
+                }
+            }
 
             if (this.player.hp === 0) {
                 this.loseScreen.draw(currentScene);
