@@ -21,6 +21,7 @@ export function makeLevel3(setScene) {
     const player = new Player(0, 0);
     const gun = new Gun(0, 0);
     const zombies = [];
+    const boss = [];
 
     const bullets = [];
     const bandages = [];
@@ -35,6 +36,9 @@ export function makeLevel3(setScene) {
         player: player,
         gun: gun,
         zombies: zombies,
+
+        boss: boss,
+        bossFight: false,
 
         bullets: bullets,
         bandages: bandages,
@@ -58,6 +62,7 @@ export function makeLevel3(setScene) {
             this.gun.magCount = savedVars.magCount;
             this.gun.ammoCount = savedVars.ammoCount;
 
+            this.boss = [];
             this.zombies = [];
             this.bandages = [];
             this.ammoBoxes = [];
@@ -66,9 +71,9 @@ export function makeLevel3(setScene) {
             this.player.setup();
             this.gun.setup();
             this.camera.attachTo(this.player);
-  
+
             // creates zombies
-            for (let l = 0; l < 45;) { // ensures they only spawn on walkable tiles
+            for (let l = 0; l < 1;) { // ensures they only spawn on walkable tiles - 45st
                 let x = Math.floor((Math.random() * 900) / 16);
                 let y = Math.floor((Math.random() * 590) / 16);
                 if (this.map.tiles3[y][x] < 6 || this.map.tiles3[y][x] > 38) {
@@ -79,7 +84,7 @@ export function makeLevel3(setScene) {
                 }
             }
             // creates bandages
-            for (let l = 0; l < 10;) { // ensures they only spawn on walkable tiles
+            for (let l = 0; l < 3;) { // ensures they only spawn on walkable tiles
                 let x = Math.floor((Math.random() * 900) / 16);
                 let y = Math.floor((Math.random() * 590) / 16);
                 if (this.map.tiles3[y][x] < 6 || this.map.tiles3[y][x] > 38) {
@@ -114,6 +119,12 @@ export function makeLevel3(setScene) {
             this.camera.update();
             this.loseScreen.update(this.player);
 
+            // boss spawn
+            if (this.zombies.length === 0 && this.bossFight === false) {
+                this.boss.push(new Zombie(278, 106, 100, 40));
+                this.bossFight = true;
+            }
+
             for (let bandage of this.bandages) {
                 bandage.update();
                 bandage.collisionWith(this.player, this.bandages, this.ui);
@@ -143,12 +154,17 @@ export function makeLevel3(setScene) {
             for (let zombie of this.zombies) {
                 zombie.update(this.player);
             }
+            for (let bos of this.boss) {
+                bos.update(this.player);
+            }
             for (let bullet of this.bullets) {
                 bullet.update(this.zombies, this.bullets, this.player, this.camera, this.map.tiles3);
             }
 
             if (frameCount % 24 === 0) {
                 this.player.damageBy(this.zombies);
+            } if (frameCount % 12 === 0) {
+                this.player.damageBy(this.boss);
             }
 
             // zombie death
@@ -247,21 +263,82 @@ export function makeLevel3(setScene) {
                 }
             }
 
+
+            // boss death
+            for (let bos of this.boss) {
+                for (let bullet of this.bullets) {
+                    if (dist(bos.x, bos.y, bullet.x, bullet.y) < bos.size / 2) {
+                        createParticles(-2, bos.x, bos.y, this.camera, bos);
+                        bos.hp -= 2;
+                        this.bullets.splice(this.bullets.indexOf(bullet), 1);
+                    }
+                    if (bos.hp <= 0) {
+                        this.boss.splice(this.boss.indexOf(bos), 1);
+                    }
+                }
+            }
+
+            // boss movement
+            for (let bos of this.boss) {
+
+                // get direction from zombie to player
+                let dx = this.player.x - bos.x;
+                let dy = this.player.y - bos.y;
+                let angle = atan2(dy, dx);
+
+                // move zombie in that direction unless already next to player
+                if (dist(this.player.x, this.player.y, bos.x, bos.y) < bos.size + 1 ||
+                dist(this.player.x, this.player.y, bos.x, bos.y) > bos.activationRange) {
+                } else {
+                    let moveX = cos(angle) * (bos.speed*4);
+                    let moveY = sin(angle) * (bos.speed*4);
+
+                    for (let vec of bos.points) {
+                        let nextMove = {
+                            x: bos.x + moveX + vec.x,
+                            y: bos.y + moveY + vec.y,
+                        };
+
+                        let x = Math.floor((bos.x + 220) / 16);
+                        let y = Math.floor((bos.y + 220) / 16);
+                        let a = Math.floor((nextMove.x + 220) / 16);
+                        let b = Math.floor((nextMove.y + 220) / 16);
+
+                        if (this.map.tiles3[b][x] > 5 && this.map.tiles3[b][x] < 39) {
+                            moveY *= -1.2;
+                        }
+
+                        if (this.map.tiles3[y][a] > 5 && this.map.tiles3[y][a] < 39) {
+                            moveX *= -1.2;
+                        }
+                    }
+                    bos.x += moveX;
+                    bos.y += moveY;
+                }
+
+                let collisionPoints = [];
+                for (let vec of bos.points) {
+                    let x = Math.floor((bos.x+vec.x + 220) / 16);
+                    let y = Math.floor((bos.y+vec.y + 220) / 16);
+        
+                    if (this.map.tiles3[y][x] > 5 && this.map.tiles3[y][x] < 39) {
+                        collisionPoints.push({x: vec.x, y: vec.y});
+                    }
+                }
+                
+                let direction = {x: 0, y: 0};
+                for (let colVec of collisionPoints) {
+                    direction.x += colVec.x;
+                    direction.y += colVec.y;
+                }
+        
+                bos.x -= direction.x*0.05;
+                bos.y -= direction.y*0.05;
+
             // push player
             this.player.pushedBy(this.zombies);
-
-            // level beat check
-            /*if (this.zombies.length === 0) {
-                if (frameCount % 150 === 0) {
-                    savedVars.hp = this.player.hp;
-                    savedVars.shield = this.player.shield;
-                    savedVars.magCount = this.gun. magCount;
-                    savedVars.ammoCount = this.gun.ammoCount;
-
-                    level2.setup(savedVars);
-                    setScene("level2");
-                }
-            }*/
+            this.player.pushedBy(this.boss);
+            }
         },
 
         draw(currentScene) {
@@ -283,6 +360,10 @@ export function makeLevel3(setScene) {
             }
             for (let zombie of this.zombies) {
                 zombie.draw(this.camera, this.player);
+            }
+            for (let bos of this.boss) {
+                bos.tint = '#ff8aab';
+                bos.draw(this.camera, this.player);
             }
             for (let particle of particles) {
                 particle.update();

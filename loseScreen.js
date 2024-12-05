@@ -39,7 +39,7 @@ export default class LoseScreen {
                 push();
                 background(0, 150);
                 imageMode(CORNER);
-                image(this.deathMessage2, 0, 0);
+                image(this.deathMessage3, 0, 0);
                 pop();
                 break;
             default:
