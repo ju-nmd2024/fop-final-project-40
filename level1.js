@@ -253,7 +253,7 @@ export function makeLevel1(setScene) {
                     savedVars.magCount = this.gun. magCount;
                     savedVars.ammoCount = this.gun.ammoCount;
 
-                    level2.setup(savedVars);
+                    level2.setup(savedVars); 
                     console.log('saved');
                     setScene("level2");
                 }

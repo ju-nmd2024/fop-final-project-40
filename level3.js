@@ -85,9 +85,9 @@ export function makeLevel3(setScene) {
                 if (this.map.tiles3[y][x] < 6 || this.map.tiles3[y][x] > 38) {
                     x = Math.floor((x * 16 - 220) + 4);
                     y = Math.floor((y * 16 - 220) + 4);
-                    this.bandages.push(new Bandage(x, y));
+                    this.bandages.push(new Bandage(x, y)); 
                     l++;
-                }
+                } 
             }
             // creates shields
                 this.shields.push(new Shield(272 + 4, 102 + 4));
