@@ -1,3 +1,5 @@
+// animation code grabbed from https://github.com/JSLegendDev/Pokemon-p5js
+
 export default class Entity {
     constructor() {
         this.spriteRef = null; // holds sprite image
