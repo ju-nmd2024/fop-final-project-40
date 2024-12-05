@@ -68,7 +68,7 @@ export function makeLevel2(setScene) {
             this.camera.attachTo(this.player);
 
             // creates zombies
-            for (let l = 0; l < 1;) { // ensures they only spawn on walkable tiles - 15
+            for (let l = 0; l < 15;) { // ensures they only spawn on walkable tiles - 15st
                 let x = Math.floor((Math.random() * 300) / 16);
                 let y = Math.floor((Math.random() * 546 + 48) / 16);
                 if (this.map.tiles2[y][x] < 6) {

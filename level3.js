@@ -1,6 +1,8 @@
 import LoseScreen from "./loseScreen.js";
 import WinScreen from "./winScreen.js";
 
+import Minimap from "./minimap.js";
+
 import Camera from "./entities/camera.js";
 import Player from "./entities/player.js";
 import Gun from "./entities/gun.js";
@@ -20,6 +22,8 @@ export function makeLevel3(setScene) {
     const loseScreen = new LoseScreen();
     const winScreen = new WinScreen();
 
+    const minimap = new Minimap();
+
     const camera = new Camera(0, 0);
     const player = new Player(0, 0);
     const gun = new Gun(0, 0);
@@ -36,6 +40,8 @@ export function makeLevel3(setScene) {
     return {
         loseScreen: loseScreen,
         winScreen: winScreen,
+
+        minimap: minimap,
 
         camera: camera,
         player: player,
@@ -58,6 +64,7 @@ export function makeLevel3(setScene) {
             this.player.load();
             this.loseScreen.load();
             this.winScreen.load();
+            this.minimap.load();
         },
         setup(savedVars) {
 
@@ -125,6 +132,7 @@ export function makeLevel3(setScene) {
             this.camera.update();
             this.loseScreen.update(this.player);
             this.winScreen.update(this.zombies, this.boss);
+            this.minimap.update(this.player);
 
             // boss spawn
             if (this.zombies.length === 0 && this.bossFight === false) {
@@ -384,6 +392,7 @@ export function makeLevel3(setScene) {
             }
 
             this.ui.draw(this.player, this.gun, this.zombies);
+            this.minimap.draw();
 
             if (this.player.hp === 0) {
                 this.loseScreen.draw(currentScene);
