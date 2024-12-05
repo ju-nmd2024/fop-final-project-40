@@ -47,7 +47,7 @@ export default class Shield extends Entity {
         drawSprite(
             this.spriteRef,
             this.x + camera.x,
-            this.y + camera.y,
+            this.y + camera.y, 
             this.currentFrameData.x,
             this.currentFrameData.y,
             this.width,

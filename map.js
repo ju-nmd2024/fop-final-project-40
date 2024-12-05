@@ -1,8 +1,8 @@
 import Entity from "./entities/entity.js";
-import { getFramesPos, drawSprite } from "../utils.js";
+import { getFramesPos, drawSprite } from "./utils.js";
 
 export default class Map extends Entity {
-    constructor() {
+    constructor() { 
         super();
         this.tileSize = 16,
 
