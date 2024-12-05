@@ -20,7 +20,7 @@ export default class Gun extends Entity {
 
         this.magCount = 1;
         this.ammoCount = 20; 
-        this.maxAmmo = null;
+        this.maxAmmo = 20;
         this.maxMag = 4;
         this.reloading = false;
 
@@ -77,8 +77,6 @@ export default class Gun extends Entity {
     setup() {
         this.loadAnim();
         this.setAnim("idle");
-
-        this.maxAmmo = this.ammoCount; // so we can restock ammo to full
     }
 
     update(bullets, player) {
